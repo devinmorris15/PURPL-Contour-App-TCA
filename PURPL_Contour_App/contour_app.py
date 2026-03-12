@@ -1558,7 +1558,9 @@ if run_contour:
 				if dxf_plots == True:
 					st.session_state.dxffile = dxf_gen
 			except Exception as e:
+				import traceback
 				st.error(f"Computation failed: {e}")
+				st.code(traceback.format_exc())
 
 ################################
 #Nozzle Contour Outputs Tab
