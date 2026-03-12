@@ -5,6 +5,7 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 import imageio.v2 as imageio
+import io
 from rocketcea.cea_obj import CEA_Obj
 
 # -----------------------------
@@ -195,7 +196,7 @@ def run_simulation(mat, geom, cea_cfg, solv_cfg, env_cfg):
         station,
     )
 
-def render_gif(data_list, filename, framesps, is_combined=False):
+def render_gif(data_list, framesps, is_combined=False):
     fig, ax = plt.subplots(figsize=(10, 6))
 
     max_wall_thickness = max(r.x_in[-1] for r in data_list)
@@ -239,8 +240,11 @@ def render_gif(data_list, filename, framesps, is_combined=False):
         fig.canvas.flush_events()
         frames.append(np.asarray(fig.canvas.buffer_rgba())[:, :, :3].copy())
 
-    imageio.mimsave(filename, frames, fps=framesps, loop = 0)
+    buf = io.BytesIO()                              # ← fake file
+    imageio.mimsave(buf, frames, format="gif", fps=framesps, loop=0)  # ← write into memory
     plt.close(fig)
+    buf.seek(0)                                     # ← rewind
+    return buf    
 
 def main():
     if len(sys.argv) < 2:
@@ -288,7 +292,7 @@ def main():
         print("\nCreating combined GIF...")
         render_gif(all_res, results_base / "Combined_Analysis.gif", is_combined=True)
 
-def run(mode, mat, chamber_geom, throat_geom, cea_cfg, solv_cfg, env_cfg, framps, output_path="thermal_output.gif"):
+def run(mode, mat, chamber_geom, throat_geom, cea_cfg, solv_cfg, env_cfg, framps):
     
     results = []
     
@@ -304,9 +308,9 @@ def run(mode, mat, chamber_geom, throat_geom, cea_cfg, solv_cfg, env_cfg, framps
     
     is_combined = mode == "both"
     framps = int(framps)
-    render_gif(results, output_path, framps, is_combined=is_combined)
+    buf = render_gif(results, framps, is_combined=is_combined)  # receive buffer
     
-    return output_path
+    return buf  # return buffer instead of filename
 
 
 
