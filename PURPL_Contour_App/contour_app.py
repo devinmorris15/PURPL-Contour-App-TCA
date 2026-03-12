@@ -1505,6 +1505,7 @@ if run_contour:
 				#(contour, angles, dia_t, dia_c, dia_e, len_c, Rad2, cangle, eangle, rt1, r2m, rnt, conic)
 
 				st.success("✓ Nozzle Generation Complete!")
+				st.session_state.computed = True
 				
 				#SAVING SESSION STATES
 				st.session_state.of = of
@@ -1602,15 +1603,17 @@ with tab2:
 		twodplot = st.session_state.twodplot
 		conr = st.session_state.conr
 
-		if st.session_state.get("twodimage") and st.session_state.get("threedimage"):
+		if "twodimage" in st.session_state and "threedimage" in st.session_state:
 			col1, col2 = st.columns([7, 4])
 			with col1:
+				st.session_state.twodimage.seek(0)
 				st.image(st.session_state.twodimage, use_container_width=True)
 			with col2:
 				st.plotly_chart(st.session_state.threedimage, use_container_width=True)
-		elif st.session_state.get("twodimage"):
+		elif "twodimage" in st.session_state:
+			st.session_state.twodimage.seek(0)
 			st.image(st.session_state.twodimage, use_container_width=True)
-		elif st.session_state.get("threedimage"):
+		elif "threedimage" in st.session_state:
 			st.plotly_chart(st.session_state.threedimage, use_container_width=True)
 		else:
 			st.info("No plots generated — check your output options in the sidebar.")
@@ -1619,40 +1622,40 @@ with tab2:
 
 		with col3:
 			if st.session_state.get("csvfile"):
-				with open(st.session_state.csvfile, "rb") as f:
-					st.download_button(
-						label="⬇ Download CSV",
-						data=f,
-						file_name=st.session_state.csvfile,
-						mime="text/csv",
-						key="dl_csv"
-					)
+				st.session_state.csvfile.seek(0)
+				st.download_button(
+					label="⬇ Download CSV",
+					data=st.session_state.csvfile,
+					file_name="nozzle_contour.csv",
+					mime="text/csv",
+					key="dl_csv"
+				)
 			else:
 				st.button("⬇ Download CSV", disabled=True, key="dl_csv")
 
 		with col4:
 			if st.session_state.get("dxffile"):
-				with open(st.session_state.dxffile, "rb") as f:
-					st.download_button(
-						label="⬇ Download DXF",
-						data=f,
-						file_name=st.session_state.dxffile,
-						mime="text/dxf",
-						key="dl_dxf"
-					)
+				st.session_state.dxffile.seek(0)
+				st.download_button(
+					label="⬇ Download DXF",
+					data=st.session_state.dxffile,
+					file_name="nozzle_contour.dxf",
+					mime="application/dxf",
+					key="dl_dxf"
+				)
 			else:
 				st.button("⬇ Download CSV", disabled=True, key="dl_csv")
 
 		with col1:
 			if st.session_state.get("twodimage"):
-				with open(st.session_state.twodimage, "rb") as f:
-					st.download_button(
-						label="⬇ Download 2D Plot",
-						data=f,
-						file_name="nozzle_contour_2d.png",
-						mime="image/png",
-						key="dl_2d"
-					)
+				st.session_state.twodimage.seek(0)
+				st.download_button(
+					label="⬇ Download 2D Plot",
+					data=st.session_state.twodimage,
+					file_name="nozzle_contour_2d.png",
+					mime="image/png",
+					key="dl_2d"
+				)
 			else:
 				st.button("⬇ Download 2D Plot", disabled=True, key="dl_2d")
 		with col2:
