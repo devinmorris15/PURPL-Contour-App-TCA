@@ -1626,7 +1626,7 @@ with tab2:
 				st.session_state.csvfile.seek(0)
 				st.download_button(
 					label="⬇ Download CSV",
-					data=st.session_state.csvfile,
+					data=st.session_state.csvfile.getvalue().encode('utf-8'),  # ← encode to bytes
 					file_name="nozzle_contour.csv",
 					mime="text/csv",
 					key="dl_csv"
