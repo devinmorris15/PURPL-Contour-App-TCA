@@ -303,10 +303,10 @@ with st.sidebar:
 
 	col1, col2 = st.columns(2)
 	with col1:
-		characteristic_velo_eff = st.number_input(label="Characteristic Velocity (c*) Efficiency %", min_value=0.0, max_value=100.0, value=None, step=10.0) #Input Box for c* efficiency
+		characteristic_velo_eff = st.number_input(label="Characteristic Velocity (c*) Efficiency %", min_value=0.0, max_value=100.0, value=100.0, step=10.0) #Input Box for c* efficiency
 		#ef_cstar = characteristic_velo_eff / 100.0
 	with col2:
-		coefficient_thrust_eff = st.number_input(label="Coefficient of Thrust (cf) Efficiency %", min_value=0.0, max_value=100.0, value=None, step=10.0) #Input Box for c* efficiency
+		coefficient_thrust_eff = st.number_input(label="Coefficient of Thrust (cf) Efficiency %", min_value=0.0, max_value=100.0, value=100.0, step=10.0) #Input Box for c* efficiency
 		#ef_cf =  coefficient_thrust_eff / 100.0
 
 	st.divider()
