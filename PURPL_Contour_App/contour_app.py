@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 import ezdxf
+import io
 import plotly.graph_objects as go
 from itertools import chain
 from matplotlib.patches import Arc
@@ -1131,13 +1132,15 @@ def plot_nozzle_final(contour, angles, dia_t, dia_c, dia_e, len_c, Rad2, cangle,
 	plt.axis('equal')
 	fig2.tight_layout(rect=[0, 0.03, 1, 0.95])
 	
-	plt.savefig("final_nozzle_contour_plot.png",
+	buf = io.BytesIO()
+	plt.savefig(buf,
+				format="png",
 				transparent=True,
 				facecolor='none',
 				bbox_inches='tight')
 	plt.close(fig2)
-
-	return("final_nozzle_contour_plot.png")
+	buf.seek(0)
+	return buf
 
 # theta_n in rad,  origin =[startx, starty], degree symbol
 def draw_angle_arc(ax, theta_n, origin, degree_symbol=r'$\theta$'):
