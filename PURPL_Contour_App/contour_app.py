@@ -1564,7 +1564,7 @@ if run_contour:
 			except Exception as e:
 				import traceback
 				st.error(f"Computation failed: {e}")
-				st.code(traceback.format_exc())
+				#st.code(traceback.format_exc())
 
 ################################
 #Nozzle Contour Outputs Tab
