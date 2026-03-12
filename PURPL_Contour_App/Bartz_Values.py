@@ -20,6 +20,7 @@ import csv
 import yaml
 import numpy as np
 from rocketcea.cea_obj import CEA_Obj
+import pandas as pd
 
 np.set_printoptions(legacy='1.25')
 
@@ -47,7 +48,7 @@ def compute_gamma(cp_JkgK, MW_kg_per_kmol):
 		return np.nan
 	return cp_JkgK / denom
 
-def run(tca_params, output_dir):
+def run(tca_params):
 	"""
 	Compute gas properties via CEA and write CSVs to output_dir.
 
@@ -242,64 +243,37 @@ def run(tca_params, output_dir):
 	prop_out_rows.append([mr, 'Exit', T_ex_K, p_ex_out, rho_ex,
 							 M_ex, a_ex, gamma_ex, cp_e, MW_E_val, k_e, mu_e, pr_e])
 
-	# --- Write turbopump_properties.csv ---
-	os.makedirs(output_dir, exist_ok=True)
-	properties_csv = os.path.join(output_dir, 'turbopump_properties.csv')
-	#properties_csv_out = os.path.join(output_dir, 'turbopump_properties_out.csv')
-	with open(properties_csv, 'w', newline='') as f:
-		writer = csv.writer(f)
-		writer.writerow(properties_header)
-		for r in properties_rows:
-			writer.writerow(r)
-	print(f'Bartz: saved {properties_csv}')
-	
-	# --- Write turbopump_propertiesout.csv ---
-	os.makedirs(output_dir, exist_ok=True)
-	properties_csv_out = os.path.join(output_dir, 'turbopump_properties_out.csv')
-	#properties_csv_out = os.path.join(output_dir, 'turbopump_properties_out.csv')
-	with open(properties_csv_out, 'w', newline='') as f:
-		writer = csv.writer(f)
-		writer.writerow(app_properties_header)
-		for r in prop_out_rows:
-			writer.writerow(r)
-	print(f'Bartz: saved {properties_csv_out}')
-	#with open(properties_csv_out, 'w', newline='') as f:
-	#    writer = csv.writer(f)
-	#    writer.writerow(properties_header)
-	#    for r in properties_rows:
-	#        writer.writerow(r)
-	#print(f'Bartz: saved {properties_csv_out}')
+# --- Build dataframes directly, no disk writes ---
+	df_properties = pd.DataFrame(properties_rows, columns=properties_header)
+	df_properties_out = pd.DataFrame(prop_out_rows, columns=app_properties_header)
 
-	# --- Write turbopump_poly_coeffs.csv ---
-	poly_csv = os.path.join(output_dir, 'turbopump_poly_coeffs.csv')
+	# --- Build poly coeffs dataframe ---
+	poly_rows = []
 	T_comb_pt = poly_data['Combustor']['Temperature_K'][0] if poly_data['Combustor']['Temperature_K'] else np.nan
 	T_th_pt   = poly_data['Throat']['Temperature_K'][0]   if poly_data['Throat']['Temperature_K']   else np.nan
 	T_ex_pt   = poly_data['Exit']['Temperature_K'][0]     if poly_data['Exit']['Temperature_K']     else np.nan
 	T_points  = np.array([T_comb_pt, T_th_pt, T_ex_pt])
 	fit_props = ['Gamma', 'Cp_J_kgK', 'Thermal_Conductivity',
 				 'Viscosity_Pa_s', 'Molecular_Weight_kg_kmol']
-	with open(poly_csv, 'w', newline='') as f:
-		writer = csv.writer(f)
-		writer.writerow(['O/F', 'Pc_psia', 'Property', 'Degree',
-						 'Coefficients_high->low', 'T_points_K', 'Y_points'])
-		for pk in fit_props:
-			y_pts = np.array([
-				poly_data['Combustor'].get(pk, [np.nan])[0],
-				poly_data['Throat'].get(pk,    [np.nan])[0],
-				poly_data['Exit'].get(pk,      [np.nan])[0],
-			])
-			mask = (~np.isnan(T_points)) & (~np.isnan(y_pts))
-			Tfit, Yfit = T_points[mask], y_pts[mask]
-			if Tfit.size < 2:
-				deg, coeffs = 0, []
-			else:
-				deg    = min(2, Tfit.size - 1)
-				coeffs = np.polyfit(Tfit, Yfit, deg).tolist()
-			writer.writerow([mr, pc, pk, deg, coeffs,
-							 Tfit.tolist(), Yfit.tolist()])
-	print(f'Bartz: saved {poly_csv}')
+	for pk in fit_props:
+		y_pts = np.array([
+			poly_data['Combustor'].get(pk, [np.nan])[0],
+			poly_data['Throat'].get(pk,    [np.nan])[0],
+			poly_data['Exit'].get(pk,      [np.nan])[0],
+		])
+		mask = (~np.isnan(T_points)) & (~np.isnan(y_pts))
+		Tfit, Yfit = T_points[mask], y_pts[mask]
+		if Tfit.size < 2:
+			deg, coeffs = 0, []
+		else:
+			deg    = min(2, Tfit.size - 1)
+			coeffs = np.polyfit(Tfit, Yfit, deg).tolist()
+		poly_rows.append([mr, pc, pk, deg, coeffs, Tfit.tolist(), Yfit.tolist()])
 
-	return properties_csv, properties_csv_out
+	df_poly = pd.DataFrame(poly_rows, columns=['O/F', 'Pc_psia', 'Property', 'Degree',
+												'Coefficients_high->low', 'T_points_K', 'Y_points'])
+
+	return df_properties, df_properties_out, df_poly
 
 # =============================================================================
 # Standalone entry point

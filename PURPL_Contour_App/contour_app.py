@@ -1254,87 +1254,70 @@ def plot3D_interactive(contour, unit):
 
 ######################### EXPORT TO CSV FILE #########################
 
-def export_nozzle_csv(contour, filename):
-	"""
-	Write ONE CSV that unites all contour points.
-	Expected contour structure from bell_nozzle(...):
-	  [xe, ye, nye,  xe2, ye2, nye2,  xbell, ybell, nybell]
-	Only x,y arrays are written.
-	CSV columns: segment,x,y,index
-	"""
-	if not isinstance(contour, (list, tuple)) or len(contour) < 9:
-		raise ValueError("Unexpected contour structure. Need at least 9 elements as returned by bell_nozzle().")
+def export_nozzle_csv(contour):  # remove filename parameter
+    if not isinstance(contour, (list, tuple)) or len(contour) < 9:
+        raise ValueError("Unexpected contour structure. Need at least 9 elements as returned by bell_nozzle().")
 
-	xe,   ye   = contour[0], contour[1]
-	xe2,  ye2  = contour[3], contour[4]
-	xed,  yed  = contour[6], contour[7]
-	xeca, yeca = contour[9], contour[10]
-	xecc, yecc = contour[12], contour[13]
-	xbell,ybell= contour[15], contour[16]
+    xe,   ye   = contour[0], contour[1]
+    xe2,  ye2  = contour[3], contour[4]
+    xed,  yed  = contour[6], contour[7]
+    xeca, yeca = contour[9], contour[10]
+    xecc, yecc = contour[12], contour[13]
+    xbell,ybell= contour[15], contour[16]
 
-	segments = [
-		("chamber_wall", xecc, yecc),
-		("convergent_arc", xeca, yeca),
-		("convergent_diagonal", xed, yed),
-		("throat_arc", xe,    ye),
-		("inlet_arc",  xe2,   ye2),
-		("bell",       xbell, ybell),
-	]
+    segments = [
+        ("chamber_wall", xecc, yecc),
+        ("convergent_arc", xeca, yeca),
+        ("convergent_diagonal", xed, yed),
+        ("throat_arc", xe,    ye),
+        ("inlet_arc",  xe2,   ye2),
+        ("bell",       xbell, ybell),
+    ]
 
-	with open(filename, "w", newline="") as f:
-		w = csv.writer(f)
-		w.writerow(["segment","x","y","index"])
-		for name, xs, ys in segments:
-			n = min(len(xs), len(ys))
-			for i in range(n):
-				w.writerow([name, float(xs[i]), float(ys[i]), i])
+    buf = io.StringIO()  # CSV is text, so StringIO not BytesIO
+    w = csv.writer(buf)
+    w.writerow(["segment","x","y","index"])
+    for name, xs, ys in segments:
+        n = min(len(xs), len(ys))
+        for i in range(n):
+            w.writerow([name, float(xs[i]), float(ys[i]), i])
 
-	return filename
+    buf.seek(0)
+    return buf
 
 def export_nozzle_dxf(contour):
-	
-	xe,   ye   = np.divide(contour[0], 1000), np.divide(contour[1], 1000)
-	xe2,  ye2  = np.divide(contour[3], 1000), np.divide(contour[4], 1000)
-	xed,  yed  = np.divide(contour[6], 1000), np.divide(contour[7], 1000)
-	xeca, yeca = np.divide(contour[9], 1000), np.divide(contour[10], 1000)
-	xecc, yecc = np.divide(contour[12], 1000), np.divide(contour[13], 1000)
-	xbell,ybell= np.divide(contour[15], 1000), np.divide(contour[16], 1000)
-	
-	xed = xed[::-1]
-	yed = yed[::-1]
-	xeca = xeca[::-1]
-	yeca = yeca[::-1]    
-	xecc = xecc[::-1]
-	yecc = yecc[::-1]
+    xe,   ye   = np.divide(contour[0], 1000), np.divide(contour[1], 1000)
+    xe2,  ye2  = np.divide(contour[3], 1000), np.divide(contour[4], 1000)
+    xed,  yed  = np.divide(contour[6], 1000), np.divide(contour[7], 1000)
+    xeca, yeca = np.divide(contour[9], 1000), np.divide(contour[10], 1000)
+    xecc, yecc = np.divide(contour[12], 1000), np.divide(contour[13], 1000)
+    xbell,ybell= np.divide(contour[15], 1000), np.divide(contour[16], 1000)
+    
+    xed = xed[::-1];   yed = yed[::-1]
+    xeca = xeca[::-1]; yeca = yeca[::-1]
+    xecc = xecc[::-1]; yecc = yecc[::-1]
 
-	doc = ezdxf.new("R2010")
-	msp = doc.modelspace()
+    doc = ezdxf.new("R2010")
+    msp = doc.modelspace()
 
-	sections = [
-		(xecc, yecc),   # Section 1
-		(xeca, yeca),   # Section 2
-		(xed, yed),     # Section 3
-		(xe, ye),       # Section 4
-		(xe2, ye2),     # Section 5
-		(xbell, ybell)  # Section 6
-	]
+    sections = [
+        (xecc, yecc),
+        (xeca, yeca),
+        (xed, yed),
+        (xe, ye),
+        (xe2, ye2),
+        (xbell, ybell)
+    ]
 
-	for x_vals, y_vals in sections:
-		points = list(zip(x_vals, y_vals))
-		
-		if len(points) > 2: # Splines need at least 3 points usually
-			# 'degree=3' is standard for smooth curves
-			msp.add_spline(points, degree=3)
+    for x_vals, y_vals in sections:
+        points = list(zip(x_vals, y_vals))
+        if len(points) > 2:
+            msp.add_spline(points, degree=3)
 
-	##################################
-	#REPLACE PATH WITH PATH YOU NEED FOR YOUR OWN COMPUTER
-	#Devin Path: "C:\Users\igoto\Downloads\GH\Turbopump\TCA\Countour Exports\nozzle_contour_new.dxf"
-	#Dani Path: "/Users/dl/Documents/GitHub/Turbopump/TCA/Countour Exports/nozzle_contour_new.dxf"
-	#Other Path: 
-	#################################
-
-	doc.saveas("nozzle_contour_new.dxf")
-	return("nozzle_contour_new.dxf")
+    buf = io.BytesIO()
+    doc.write(buf)  # ezdxf's in-memory write method
+    buf.seek(0)
+    return buf
 
 ##################################
 #Runs all the code when the run button is hit
@@ -1475,7 +1458,8 @@ if run_contour:
 
 				#Get nozzle design functions to b e implemented
 				if csv_plot == True:
-					csv_gen = export_nozzle_csv(contour, filename="nozzle_contour.csv")
+					csv_gen = export_nozzle_csv(contour)
+
 				if dxf_plots == True:
 					dxf_gen = export_nozzle_dxf(contour)
 
@@ -1912,8 +1896,7 @@ with tab3:
 		# --- Unpack inputs ---
 		all_params = [of, pc_psi, pe_psi, con_ratio, cp_conversion, tc_conversion, 
 				visc_conversion, ox, fuel, f1, f2, Eratio, out_p_unit]
-		props_csv, output_csv = Bartz_Values.run(all_params, ".")
-		df_therm = pd.read_csv(output_csv)
+		df_properties, df_therm, df_poly = Bartz_Values.run(all_params)
 		df_therm_display = df_therm.set_index('Station').T.reset_index()
 		df_therm_display = df_therm_display.rename(columns={'index': 'Property'})
 		st.dataframe(
@@ -2101,16 +2084,15 @@ with tab4:
 					"L_in": twall   # wall thickness at throat in inches
 				}
 
-				hts.run(
+				st.session_state["thermal_output"] = hts.run(
 					st.session_state.thermal_mode,
 					material, chamber_geom, throat_geom,
-					cea_cfg, solver_cfg, environment_cfg, fps,
-					output_path="thermal_output.gif")
-			st.session_state.thermal_output = "thermal_output.gif"
+					cea_cfg, solver_cfg, environment_cfg, fps)
 
 		if "thermal_output" in st.session_state:
-			with open("thermal_output.gif", "rb") as f:
-				gif_data = f.read()
+			buf = st.session_state["thermal_output"]
+			buf.seek(0)  # rewind just in case
+			gif_data = buf.read()
 			gif_b64 = base64.b64encode(gif_data).decode()
 			st.markdown(f'<img src="data:image/gif;base64,{gif_b64}" style="width:100%">', unsafe_allow_html=True)
 	else:
