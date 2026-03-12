@@ -1258,69 +1258,69 @@ def plot3D_interactive(contour, unit):
 ######################### EXPORT TO CSV FILE #########################
 
 def export_nozzle_csv(contour):  # remove filename parameter
-    if not isinstance(contour, (list, tuple)) or len(contour) < 9:
-        raise ValueError("Unexpected contour structure. Need at least 9 elements as returned by bell_nozzle().")
+	if not isinstance(contour, (list, tuple)) or len(contour) < 9:
+		raise ValueError("Unexpected contour structure. Need at least 9 elements as returned by bell_nozzle().")
 
-    xe,   ye   = contour[0], contour[1]
-    xe2,  ye2  = contour[3], contour[4]
-    xed,  yed  = contour[6], contour[7]
-    xeca, yeca = contour[9], contour[10]
-    xecc, yecc = contour[12], contour[13]
-    xbell,ybell= contour[15], contour[16]
+	xe,   ye   = contour[0], contour[1]
+	xe2,  ye2  = contour[3], contour[4]
+	xed,  yed  = contour[6], contour[7]
+	xeca, yeca = contour[9], contour[10]
+	xecc, yecc = contour[12], contour[13]
+	xbell,ybell= contour[15], contour[16]
 
-    segments = [
-        ("chamber_wall", xecc, yecc),
-        ("convergent_arc", xeca, yeca),
-        ("convergent_diagonal", xed, yed),
-        ("throat_arc", xe,    ye),
-        ("inlet_arc",  xe2,   ye2),
-        ("bell",       xbell, ybell),
-    ]
+	segments = [
+		("chamber_wall", xecc, yecc),
+		("convergent_arc", xeca, yeca),
+		("convergent_diagonal", xed, yed),
+		("throat_arc", xe,    ye),
+		("inlet_arc",  xe2,   ye2),
+		("bell",       xbell, ybell),
+	]
 
-    buf = io.StringIO()  # CSV is text, so StringIO not BytesIO
-    w = csv.writer(buf)
-    w.writerow(["segment","x","y","index"])
-    for name, xs, ys in segments:
-        n = min(len(xs), len(ys))
-        for i in range(n):
-            w.writerow([name, float(xs[i]), float(ys[i]), i])
+	buf = io.StringIO()  # CSV is text, so StringIO not BytesIO
+	w = csv.writer(buf)
+	w.writerow(["segment","x","y","index"])
+	for name, xs, ys in segments:
+		n = min(len(xs), len(ys))
+		for i in range(n):
+			w.writerow([name, float(xs[i]), float(ys[i]), i])
 
-    buf.seek(0)
-    return buf
+	buf.seek(0)
+	return buf
 
 def export_nozzle_dxf(contour):
-    xe,   ye   = np.divide(contour[0], 1000), np.divide(contour[1], 1000)
-    xe2,  ye2  = np.divide(contour[3], 1000), np.divide(contour[4], 1000)
-    xed,  yed  = np.divide(contour[6], 1000), np.divide(contour[7], 1000)
-    xeca, yeca = np.divide(contour[9], 1000), np.divide(contour[10], 1000)
-    xecc, yecc = np.divide(contour[12], 1000), np.divide(contour[13], 1000)
-    xbell,ybell= np.divide(contour[15], 1000), np.divide(contour[16], 1000)
-    
-    xed = xed[::-1];   yed = yed[::-1]
-    xeca = xeca[::-1]; yeca = yeca[::-1]
-    xecc = xecc[::-1]; yecc = yecc[::-1]
+	xe,   ye   = np.divide(contour[0], 1000), np.divide(contour[1], 1000)
+	xe2,  ye2  = np.divide(contour[3], 1000), np.divide(contour[4], 1000)
+	xed,  yed  = np.divide(contour[6], 1000), np.divide(contour[7], 1000)
+	xeca, yeca = np.divide(contour[9], 1000), np.divide(contour[10], 1000)
+	xecc, yecc = np.divide(contour[12], 1000), np.divide(contour[13], 1000)
+	xbell,ybell= np.divide(contour[15], 1000), np.divide(contour[16], 1000)
+	
+	xed = xed[::-1];   yed = yed[::-1]
+	xeca = xeca[::-1]; yeca = yeca[::-1]
+	xecc = xecc[::-1]; yecc = yecc[::-1]
 
-    doc = ezdxf.new("R2010")
-    msp = doc.modelspace()
+	doc = ezdxf.new("R2010")
+	msp = doc.modelspace()
 
-    sections = [
-        (xecc, yecc),
-        (xeca, yeca),
-        (xed, yed),
-        (xe, ye),
-        (xe2, ye2),
-        (xbell, ybell)
-    ]
+	sections = [
+		(xecc, yecc),
+		(xeca, yeca),
+		(xed, yed),
+		(xe, ye),
+		(xe2, ye2),
+		(xbell, ybell)
+	]
 
-    for x_vals, y_vals in sections:
-        points = list(zip(x_vals, y_vals))
-        if len(points) > 2:
-            msp.add_spline(points, degree=3)
+	for x_vals, y_vals in sections:
+		points = list(zip(x_vals, y_vals))
+		if len(points) > 2:
+			msp.add_spline(points, degree=3)
 
-    buf = io.BytesIO()
-    doc.write(buf)  # ezdxf's in-memory write method
-    buf.seek(0)
-    return buf
+	buf = io.BytesIO()
+	doc.write(buf, fmt="asc")  # explicit ascii format
+	buf.seek(0)
+	return buf
 
 ##################################
 #Runs all the code when the run button is hit
