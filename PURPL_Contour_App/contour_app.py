@@ -1317,10 +1317,14 @@ def export_nozzle_dxf(contour):
 		if len(points) > 2:
 			msp.add_spline(points, degree=3)
 
-	buf = io.BytesIO()
-	doc.write(buf, fmt="asc")  # explicit ascii format
-	buf.seek(0)
-	return buf
+	# Write to StringIO first (DXF is text-based)
+	str_buf = io.StringIO()
+	doc.write(str_buf)
+	
+	# Convert to BytesIO for Streamlit
+	bytes_buf = io.BytesIO(str_buf.getvalue().encode('utf-8'))
+	bytes_buf.seek(0)
+	return bytes_buf
 
 ##################################
 #Runs all the code when the run button is hit
