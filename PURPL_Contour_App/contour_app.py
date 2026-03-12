@@ -1257,16 +1257,16 @@ def plot3D_interactive(contour, unit):
 
 ######################### EXPORT TO CSV FILE #########################
 
-def export_nozzle_csv(contour):  # remove filename parameter
+def export_nozzle_csv(contour, con_factor):  # remove filename parameter
 	if not isinstance(contour, (list, tuple)) or len(contour) < 9:
 		raise ValueError("Unexpected contour structure. Need at least 9 elements as returned by bell_nozzle().")
-
-	xe,   ye   = contour[0], contour[1]
-	xe2,  ye2  = contour[3], contour[4]
-	xed,  yed  = contour[6], contour[7]
-	xeca, yeca = contour[9], contour[10]
-	xecc, yecc = contour[12], contour[13]
-	xbell,ybell= contour[15], contour[16]
+	con = 1 / con_factor
+	xe,   ye   = np.divide(contour[0], con), np.divide(contour[1], con)
+	xe2,  ye2  = np.divide(contour[3], con), np.divide(contour[4], con)
+	xed,  yed  = np.divide(contour[6], con), np.divide(contour[7], con)
+	xeca, yeca = np.divide(contour[9], con), np.divide(contour[10], con)
+	xecc, yecc = np.divide(contour[12], con), np.divide(contour[13], con)
+	xbell,ybell= np.divide(contour[15], con), np.divide(contour[16], con)
 
 	segments = [
 		("chamber_wall", xecc, yecc),
@@ -1288,13 +1288,14 @@ def export_nozzle_csv(contour):  # remove filename parameter
 	buf.seek(0)
 	return buf
 
-def export_nozzle_dxf(contour):
-	xe,   ye   = np.divide(contour[0], 1000), np.divide(contour[1], 1000)
-	xe2,  ye2  = np.divide(contour[3], 1000), np.divide(contour[4], 1000)
-	xed,  yed  = np.divide(contour[6], 1000), np.divide(contour[7], 1000)
-	xeca, yeca = np.divide(contour[9], 1000), np.divide(contour[10], 1000)
-	xecc, yecc = np.divide(contour[12], 1000), np.divide(contour[13], 1000)
-	xbell,ybell= np.divide(contour[15], 1000), np.divide(contour[16], 1000)
+def export_nozzle_dxf(contour, con_factor):
+	con = 1 / con_factor
+	xe,   ye   = np.divide(contour[0], con), np.divide(contour[1], con)
+	xe2,  ye2  = np.divide(contour[3], con), np.divide(contour[4], con)
+	xed,  yed  = np.divide(contour[6], con), np.divide(contour[7], con)
+	xeca, yeca = np.divide(contour[9], con), np.divide(contour[10], con)
+	xecc, yecc = np.divide(contour[12], con), np.divide(contour[13], con)
+	xbell,ybell= np.divide(contour[15], con), np.divide(contour[16], con)
 	
 	xed = xed[::-1];   yed = yed[::-1]
 	xeca = xeca[::-1]; yeca = yeca[::-1]
@@ -1463,13 +1464,6 @@ if run_contour:
 				#Other Path: 
 				#################################
 
-				#Get nozzle design functions to b e implemented
-				if csv_plot == True:
-					csv_gen = export_nozzle_csv(contour)
-
-				if dxf_plots == True:
-					dxf_gen = export_nozzle_dxf(contour)
-
 				#Need Dt, Dc, De, Lc in inches
 				if out_len_unit == "in":
 					conv_o = 1 / in_to_m
@@ -1483,6 +1477,13 @@ if run_contour:
 				elif out_len_unit == 'm':
 					conv_o = 1
 					graph_unit = "Meters"
+
+				#Get nozzle design functions to b e implemented
+				if csv_plot == True:
+					csv_gen = export_nozzle_csv(contour, conv_o)
+
+				if dxf_plots == True:
+					dxf_gen = export_nozzle_dxf(contour, conv_o)
 				
 				Dt_o = 2 * np.sqrt(At_m / np.pi) * conv_o
 				Dc_o = Dc_m * conv_o
