@@ -1,6 +1,9 @@
-PyYAML
+streamlit
 numpy
-pandas
 matplotlib
-scipy
+pandas
+plotly
+ezdxf
 rocketcea
+imageio
+pyyaml

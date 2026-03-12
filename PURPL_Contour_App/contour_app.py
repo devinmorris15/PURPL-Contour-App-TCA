@@ -23,7 +23,7 @@ import Bartz_Values
 import heat_transfer_sim as hts
 
 #import materials json
-with open("materials_1d.json") as f:
+with open("data/materials_1d.json") as f:
 	mats = json.load(f)
 
 ############
