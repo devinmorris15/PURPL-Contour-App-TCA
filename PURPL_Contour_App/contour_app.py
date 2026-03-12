@@ -451,7 +451,8 @@ with tab2:
 	st.title("Nozzle Contour Results")
 	st.divider()
 
-
+with tab4:
+	st.title("1-Dimension Heat Transfer Simulator")
 
 ######################################
 #User-Defined Functions
