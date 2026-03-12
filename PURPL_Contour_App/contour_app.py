@@ -1644,7 +1644,7 @@ with tab2:
 					key="dl_dxf"
 				)
 			else:
-				st.button("⬇ Download CSV", disabled=True, key="dl_csv")
+				st.button("⬇ Download DXF", disabled=True, key="dl_dxf")
 
 		with col1:
 			if st.session_state.get("twodimage"):
