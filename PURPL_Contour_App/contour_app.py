@@ -201,7 +201,7 @@ st.markdown("""
 def load_logo(path):
 	with open(path, "rb") as f:
 		return base64.b64encode(f.read()).decode()
-logo_b64 = load_logo(r"C:\Users\igoto\Pictures\purpl_transparent_logo.png")
+logo_b64 = load_logo("assets/purpl_transparent_logo.png")
 
 #Adds App Header With PURPL Logo and Title, gotten from Claude
 st.markdown(f"""
