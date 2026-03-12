@@ -14,6 +14,8 @@ from matplotlib.patches import Arc
 from bisect import bisect_left
 import pandas as pd
 import json
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 #Import Rafa Heat Code
 import Bartz_Values
@@ -23,7 +25,7 @@ import Bartz_Values
 import heat_transfer_sim as hts
 
 #import materials json
-with open("data/materials_1d.json") as f:
+with open(os.path.join(BASE_DIR, "data/materials_1d.json")) as f:
 	mats = json.load(f)
 
 ############
@@ -201,7 +203,7 @@ st.markdown("""
 def load_logo(path):
 	with open(path, "rb") as f:
 		return base64.b64encode(f.read()).decode()
-logo_b64 = load_logo("assets/purpl_transparent_logo.png")
+logo_b64 = load_logo(os.path.join(BASE_DIR, "assets/purpl_transparent_logo.png"))
 
 #Adds App Header With PURPL Logo and Title, gotten from Claude
 st.markdown(f"""
