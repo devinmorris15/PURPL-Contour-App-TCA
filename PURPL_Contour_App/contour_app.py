@@ -263,7 +263,7 @@ with st.sidebar:
 			ox = st.selectbox("Oxidizer", ["90_H2O2", "98_H2O2","LOX", "N2O"], index=0) #Choose Oxidizer Select Box
 		with col2:
 			fuel = st.selectbox("Fuel", ["CH4", "Ethanol", "Gasoline", "HTBP", "Isopropanol", "Kerosene", "LCH4_NASA", "LH2_NASA", "Methanol", "MMH", "N2H4", "Propane", "RP_1", "RP1_NASA"], index=0) #Choose Fuel Select Box
-
+    #a
 	with col3:
 		of_ratio = st.number_input(label="O/F Ratio", min_value=0.0, max_value=100.0, value=None, step=0.1)#Input Box for O/F Ratio
 
