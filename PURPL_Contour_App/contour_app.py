@@ -517,7 +517,8 @@ def te_sizing(thrust, mflow, mr, pc, pe, pamb, ef_cstar, ef_cf, fr1, fr2):
 		mdot = mflow
 		At = (mdot * Cstar) / (pc * psi_to_pa)           #Calculates area of throat in m^2
 		Ae = At * Eps                    #Calculates exit area in m^2
-		Ft = (mdot * Ve) + (pe - pamb) * Ae
+		Ft = ((mdot * Ve) + (pe - pamb) * Ae) #adjusted for efficiency factors
+		Ft = (mdot) * (Cstar * ef_cstar) * (cf * ef_cf)
 	else:
 		Ft = thrust          #Converts force of thrust to Newtons
 		At = Ft / (pc * psi_to_pa * cf)
