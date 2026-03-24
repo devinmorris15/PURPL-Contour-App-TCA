@@ -257,12 +257,12 @@ with st.sidebar:
 		with col1:
 			ox = st.selectbox("Oxidizer", ["LOX", "N2O"], index=0) #Choose Oxidizer Select Box
 		with col2:
-			fuel = st.selectbox("Fuel", ["RP_1", "LH2", "CH4", "Isopropanol"], index=0) #Choose Fuel Select Box
+			fuel = st.selectbox("Fuel", ["RP_1", "LH2", "CH4", "IPA"], index=0) #Choose Fuel Select Box
 	else:
 		with col1:
 			ox = st.selectbox("Oxidizer", ["90_H2O2", "98_H2O2","LOX", "N2O"], index=0) #Choose Oxidizer Select Box
 		with col2:
-			fuel = st.selectbox("Fuel", ["RP_1", "GH2", "Isopropanol"], index=0) #Choose Fuel Select Box
+			fuel = st.selectbox("Fuel", ["RP_1", "GH2", "IPA"], index=0) #Choose Fuel Select Box
 
 	with col3:
 		of_ratio = st.number_input(label="O/F Ratio", min_value=0.0, max_value=100.0, value=None, step=0.1)#Input Box for O/F Ratio
@@ -1384,6 +1384,9 @@ if run_contour:
 		with st.spinner("Running CEA and computing contour..."):
 			try:
 				#CEA Object Definition with user defined props
+				if ox == "IPA":
+					ox = "Isopropanol"
+				
 				C = CEA_Obj(oxName=ox, fuelName=fuel)
 
 				of = of_ratio   #changes name of of_ratio to of
