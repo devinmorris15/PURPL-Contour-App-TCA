@@ -1491,7 +1491,7 @@ if run_contour:
 				Dt_o = 2 * np.sqrt(At_m / np.pi) * conv_o
 				Dc_o = Dc_m * conv_o
 				De_o = 2 * np.sqrt(Ae_m / np.pi) * conv_o
-				con_ratio = np.sqrt(Dc_o / Dt_o)
+				con_ratio = (Dc_o / Dt_o) * 2
 				Lc_o = Lc_m * conv_o
 				L_nozz = Ln * conv_o
 				Lstar_o = characteristic_length  * conv_o
