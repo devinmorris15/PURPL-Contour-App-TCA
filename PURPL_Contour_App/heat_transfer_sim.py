@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import imageio.v2 as imageio
 import io
 from rocketcea.cea_obj import CEA_Obj
+import streamlit as st
 
 # -----------------------------
 # Physics Helpers
@@ -140,6 +141,16 @@ def run_simulation(mat, geom, cea_cfg, solv_cfg, env_cfg):
         f"  Pr      : {Pr:.4f}\n"
         f"  Ma_ref  : {Ma:.2f}"
     )
+
+    st.code(f"""
+        Station : {station}
+        T_g     : {T_g:.1f} K  ({K_to_F(T_g):.1f} °F)
+        gamma   : {gam:.4f}
+        cp_g    : {cp_g:.1f} J/(kg·K)
+        mu      : {mu:.3e} Pa·s
+        Pr      : {Pr:.4f}
+        Ma_ref  : {Ma:.2f}
+        """)
 
     Pc_Pa = psi_to_Pa(cea_cfg["Pc_chamber_psia"])
     Cstar = float(cea.get_Cstar(Pc=cea_cfg["Pc_chamber_psia"], MR=cea_cfg["MR"])) * 0.3048
