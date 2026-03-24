@@ -1517,6 +1517,7 @@ if run_contour:
 				st.session_state.computed = True
 				
 				#SAVING SESSION STATES
+				st.session_state.ox = ox
 				st.session_state.of = of
 				st.session_state.pc_psi = pc_psi
 				st.session_state.pc_pa = pc_pa
@@ -1576,6 +1577,7 @@ if run_contour:
 
 with tab2:
 	if st.session_state.get("computed"):
+		ox = st.session_state.ox
 		of = st.session_state.of
 		pc_psi = st.session_state.pc_psi
 		pc_pa = st.session_state.pc_pa
@@ -1869,7 +1871,7 @@ with tab2:
 with tab3:
 	st.divider()
 	if st.session_state.get("computed"):
-
+		ox = st.session_state.ox
 		of = st.session_state.of
 		pc_psi = st.session_state.pc_psi
 		pc_pa = st.session_state.pc_pa
@@ -1930,7 +1932,7 @@ with tab3:
 with tab4:
 	st.divider()
 	if st.session_state.get("computed"):
-
+		ox = st.session_state.ox 
 		of = st.session_state.of
 		pc_psi = st.session_state.pc_psi
 		pc_pa = st.session_state.pc_pa
