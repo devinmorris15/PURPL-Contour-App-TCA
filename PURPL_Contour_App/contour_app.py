@@ -2109,6 +2109,7 @@ with tab4:
 					cea_cfg, solver_cfg, environment_cfg, fps)
 
 		if "thermal_output" in st.session_state:
+			st.divider()
 			buf = st.session_state["thermal_output"]
 			buf.seek(0)  # rewind just in case
 			gif_data = buf.read()
