@@ -438,7 +438,7 @@ with st.sidebar:
 	run_contour = st.button("Generate Contour", type="primary", use_container_width=True, key="run_cont_btn")
 
 tab1, tab2, tab3, tab4 = st.tabs(["Overview", "Nozzle Contour Results", "Thermal Results", "1-D Thermal Sims"])
-#tab1, tab2 = st.tabs(["Overview", "Nozzle Contour Results"])
+#tab1, tab2 = st.tabs(["Overview", "Nozzle Contour Results", "Thermal Results", "1-D Thermal Sims"])
 
 with tab1:
 	st.title("Welcome to PURPL's Nozzle Contouring App!")
@@ -1757,16 +1757,16 @@ with tab2:
 
 		if chamber_size_def == "Chamber Diameter":
 			cdef_id1 = "Chamber Diameter"
-			cdef_val1 = Dt_o
+			cdef_val1 = Dc_o
 			cdef_unit1 = out_len_unit
 			cdef_id2 = "Contraction Ratio"
-			cdef_val2 = con_ratio
+			cdef_val2 = conr
 			cdef_unit2 = "—"
 		else:
-			cdef_val1 = con_ratio
+			cdef_val1 = conr
 			cdef_unit1 = "—"
 			cdef_id2 = "Chamber Diameter"
-			cdef_val2 = Dt_o
+			cdef_val2 = Dc_o
 			cdef_unit2 = out_len_unit
 			cdef_id1 = "Contraction Ratio"
 
