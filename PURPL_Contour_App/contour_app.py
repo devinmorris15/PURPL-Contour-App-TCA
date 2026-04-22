@@ -1842,15 +1842,15 @@ with tab2:
 			st.subheader("All Output Parameters")
 			df2 = pd.DataFrame({
 				"Output Parameter": [
-					"Throat Diameter", "Exit Diameter", cdef_id2, "Nozzle Length", "Total Length", cl_id2, t_mf_def2,
+					"Throat Diameter", "Exit Diameter", cdef_id2, "Expansion Ratio", "Nozzle Length", "Total Length", cl_id2, t_mf_def2,
 					tn_def, te_def
 				],
 				"Value": [
-					round(Dt_o,3), round(De_o,3), round(cdef_val2,3), round(L_nozz,3), round((Lc_o + L_nozz),3), round(cl_val2,3),
+					round(Dt_o,3), round(De_o,3), round(cdef_val2,3), round(Eratio, 3), round(L_nozz,3), round((Lc_o + L_nozz),3), round(cl_val2,3),
 					round(t_mf2,1), tn, te
 				],
 				"Units": [
-					out_len_unit, out_len_unit, cdef_unit2, out_len_unit, out_len_unit, out_len_unit, t_mf_unit2, tn_u, te_u
+					out_len_unit, out_len_unit, cdef_unit2, "—", out_len_unit, out_len_unit, out_len_unit, t_mf_unit2, tn_u, te_u
 				]
 			})
 			st.dataframe(
