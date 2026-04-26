@@ -443,7 +443,12 @@ tab1, tab2, tab3 = st.tabs(["Overview", "Nozzle Contour Results", "Thermal Resul
 with tab1:
 	st.title("Welcome to PURPL's Nozzle Contouring App!")
 
-	st.text("We are Purdue Undergraduate Rocket Propulsion Laboratory, a forward-thinking team of undergraduate studentsdesigning, building, and testing rocket engines.")
+	st.text("This free app was designed to be used by PURPL and other student design teams around the world to improve accessibility and participation.")
+	st.text("The Thrust Chamber Assembly subteam within PURPL's Turbopump team developed ____ as an alternative to paywalled team standards. PURPLContour was intended..." \
+	"designed to allow diverse rocket engine designs with unqiue specifications to obtain contour designs. Both 2D and 3D graphics of the contour may be obatined, ..." \
+	"as well as both CSV and DXF outputs for further implementation flexibility.")
+
+#	st.text("We are Purdue Undergraduate Rocket Propulsion Laboratory, a forward-thinking team of undergraduate students designing, building, and testing rocket engines.")
 
 with tab3:
 	 st.title("Other CEA Results")
