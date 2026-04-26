@@ -437,8 +437,8 @@ with st.sidebar:
 
 	run_contour = st.button("Generate Contour", type="primary", use_container_width=True, key="run_cont_btn")
 
-#tab1, tab2, tab3, tab4 = st.tabs(["Overview", "Nozzle Contour Results", "Thermal Results", "1-D Thermal Sims"])
-tab1, tab2, tab3 = st.tabs(["Overview", "Nozzle Contour Results", "Thermal Results"])
+tab1, tab2, tab3, tab4 = st.tabs(["Overview", "Nozzle Contour Results", "Thermal Results", "1-D Thermal Sims"])
+#tab1, tab2 = st.tabs(["Overview", "Nozzle Contour Results", "Thermal Results", "1-D Thermal Sims"])
 
 with tab1:
 	st.title("Welcome to PURPL's Nozzle Contouring App!")
@@ -446,14 +446,14 @@ with tab1:
 	st.text("We are Purdue Undergraduate Rocket Propulsion Laboratory, a forward-thinking team of undergraduate studentsdesigning, building, and testing rocket engines.")
 
 with tab3:
-	 st.title("Other CEA Results")
+	 st.title("Thermal Results")
 
 with tab2:
 	st.title("Nozzle Contour Results")
 	st.divider()
 
-#with tab4:
-#	st.title("1-Dimension Heat Transfer Simulator")
+with tab4:
+	st.title("1-Dimension Heat Transfer Simulator")
 
 ######################################
 #User-Defined Functions
