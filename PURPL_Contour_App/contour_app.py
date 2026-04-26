@@ -251,7 +251,7 @@ with st.sidebar:
 	#Make standard selection and full list
 	prop_choices = st.selectbox("Propellant List", ["Simple Propellants List", "Full Propellants List"], index = 0)
 
-	col1, col2, col3 = st.columns([1, 1, 1.5])
+	col1, col2, col3 = st.columns([1.5, 1.5, 1])
 
 	if prop_choices == "Simple Propellants List":
 		with col1:
