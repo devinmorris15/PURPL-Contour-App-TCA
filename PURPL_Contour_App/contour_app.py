@@ -537,7 +537,8 @@ with tab1:
 					<div style="margin-top: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; color: #cccccc; line-height: 1.6;">
 						<strong>Devin Morris</strong><br>
 						Mechanical Engineering '28<br>
-						Discord: @yungstarfish.
+						Discord: @yungstarfish.<br>
+						Email: morri699@purdue.edu
 					</div>
 				</div>
 				<div style="flex: 1; min-width: 200px;">
