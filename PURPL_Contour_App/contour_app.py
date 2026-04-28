@@ -269,8 +269,9 @@ st.markdown("""
             margin-top: -6rem;
         }
         section[data-testid="stSidebar"] > div {
-            padding-top: -6rem;  /* adjust this value */
-        }
+    		padding-top: 0rem;
+    		margin-top: -3rem;  /* go as negative as needed */
+		}
     </style>
 """, unsafe_allow_html=True)
 
