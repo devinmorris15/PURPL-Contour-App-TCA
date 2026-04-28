@@ -254,7 +254,7 @@ st.markdown(f"""
 	<div class="custom-header">
 		<img src="data:image/png;base64,{logo_b64}"/>
 		<div>
-			<h1>Purdue Undergraduate Rocket Propulsion Laboratory - Nozzle Contouring App</h1>
+			<h1>Purdue Undergraduate Rocket Propulsion Laboratory - PURPLContour</h1>
 		</div>
 	</div>
 """, unsafe_allow_html=True)
