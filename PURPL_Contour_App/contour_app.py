@@ -302,6 +302,16 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+#makes dividers old gold color
+st.markdown("""
+    <style>
+        /* Custom divider color */
+        [data-testid="stDivider"] hr {
+            border-color: #DBC885 !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 #remove blank space at top of sidebar
 st.markdown("""
     <style>
@@ -521,8 +531,8 @@ with tab1:
     st.markdown(f"""
         <p>PURPLContour is a free app designed to be used by PURPL and other student design teams around the world to improve accessibility and participation for rocketry.</p>
 
-        <div style="overflow: hidden; border: 1px solid #DBC885; border-radius: 8px; padding: 16px;">
-            <div style="float: left; margin-right: 24px; margin-bottom: 8px; text-align: center;">
+        <div style="overflow: hidden;">
+            <div style="float: left; margin-right: 24px; margin-bottom: 8px; text-align: center; border: 1px solid #DBC885; border-radius: 8px; padding: 12px;">
                 <img src="data:image/jpeg;base64,{devin_pic}" width="180" style="border-radius: 8px; display: block;"/>
                 <div style="margin-top: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; color: #cccccc; line-height: 1.6;">
                     <strong>Devin Morris</strong><br>
