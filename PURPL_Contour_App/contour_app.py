@@ -254,7 +254,7 @@ st.markdown(f"""
 	<div class="custom-header">
 		<img src="data:image/png;base64,{logo_b64}"/>
 		<div>
-			<h1>PURPLContour</h1>
+			<h1>PURPLContour by Purdue Undergraduate Rocket Propulsion Laboratory</h1>
 		</div>
 	</div>
 """, unsafe_allow_html=True)
