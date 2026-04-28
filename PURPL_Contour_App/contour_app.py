@@ -216,8 +216,10 @@ logo_b64 = load_logo(os.path.join(BASE_DIR, "assets/purpl_transparent_logo.png")
 
 #load my personal picture
 def get_image_base64(path):
-    with open(path, "rb") as f:
+    abs_path = os.path.join(os.path.dirname(__file__), path)
+    with open(abs_path, "rb") as f:
         return base64.b64encode(f.read()).decode()
+
 devin_pic = get_image_base64("assets/devin_purpl_pic.jpeg")
 
 #Adds App Header With PURPL Logo and Title, gotten from Claude
