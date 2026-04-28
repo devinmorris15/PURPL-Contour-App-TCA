@@ -551,7 +551,7 @@ with tab1:
 
 	st.markdown("<br>", unsafe_allow_html=True)
 
-	st.markdown("\n\nOur team is dedicated to delivering a continuously improving interface and accurate results. Contact our app's creator, Devin, on discord to provide feedback!")
+	st.markdown("\n\nOur team is dedicated to delivering a continuously improving interface and accurate results. Contact our app's creator, Devin, via discord or email to provide feedback!")
 
 #	st.text("We are Purdue Undergraduate Rocket Propulsion Laboratory, a forward-thinking team of undergraduate students designing, building, and testing rocket engines.")
 
