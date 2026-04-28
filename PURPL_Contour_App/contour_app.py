@@ -242,6 +242,15 @@ st.markdown(f"""
 	</div>
 """, unsafe_allow_html=True)
 
+#Hides dark mode option selection
+st.markdown("""
+    <style>
+        /* Hide the settings/theme toggle button */
+        #MainMenu {visibility: hidden;}
+        header[data-testid="stHeader"] button[kind="header"] {display: none;}
+    </style>
+""", unsafe_allow_html=True)
+
 with st.sidebar:
 
 	st.title("Input Parameters")
@@ -446,7 +455,7 @@ with tab1:
 	st.text("This free app was designed to be used by PURPL and other student design teams around the world to improve accessibility and participation.")
 	st.text("The Thrust Chamber Assembly subteam within PURPL's Turbopump team developed ____ as an alternative to paywalled team standards. PURPLContour was intended..." \
 	"designed to allow diverse rocket engine designs with unqiue specifications to obtain contour designs. Both 2D and 3D graphics of the contour may be obatined, ..." \
-	"as well as both CSV and DXF outputs for further implementation flexibility.")
+	"as well as both CSV and DXF outputs for further implementation flexibility.D")
 
 #	st.text("We are Purdue Undergraduate Rocket Propulsion Laboratory, a forward-thinking team of undergraduate students designing, building, and testing rocket engines.")
 
