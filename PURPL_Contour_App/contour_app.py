@@ -256,11 +256,25 @@ st.markdown("""
     <style>
         .block-container {
             padding-top: 0rem;
-            margin-top: -4rem;
+            margin-top: -6rem;
         }
     </style>
 """, unsafe_allow_html=True)
 
+#remove blank space at top of sidebar
+st.markdown("""
+    <style>
+        [data-testid="stSidebar"] .block-container {
+            padding-top: 0rem;
+            margin-top: -6rem;
+        }
+        section[data-testid="stSidebar"] > div {
+            padding-top: 1rem;  /* adjust this value */
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+#create sidebar
 with st.sidebar:
 
 	st.title("Input Parameters")
