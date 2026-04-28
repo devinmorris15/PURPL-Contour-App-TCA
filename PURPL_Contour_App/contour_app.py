@@ -541,9 +541,9 @@ with tab1:
                 </div>
             </div>
             <div>
-                The Thrust Chamber Assembly subteam within PURPL's Turbopump team developed PURPLContour as an alternative to paywalled team standards. The app is designed to allow diverse rocket engine designs with unique specifications to obtain contour designs. Both 2D and 3D graphics of the contour may be obtained, as well as both CSV and DXF outputs for implementation flexibility with numerous CAD and simulation softwares.
+                The Thrust Chamber Assembly subteam within PURPL's Turbopump team developed PURPLContour as an alternative to paywalled team standards. The app is designed to allow for diverse rocket engine designs with unique specifications to obtain nozzle contours. Both 2D and 3D graphics of the contour may be obtained, as well as both CSV and DXF outputs for implementation flexibility with numerous CAD and simulation softwares.
                 <br><br>
-                Beyond constructing the nozzle architecture for any combination of propellants, PURPL contour also provides other important values which can be used to support results and future simulations.
+                Beyond constructing the nozzle architecture for any combination of propellants, PURPL contour also provides other important values which can be used to support results and future simulations. Both input and output can units can be specified for convenience of any team.
             </div>
         </div>
     """, unsafe_allow_html=True)
