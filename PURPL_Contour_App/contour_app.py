@@ -259,7 +259,6 @@ st.markdown(f"""
 	</div>
 """, unsafe_allow_html=True)
 
-#sticky tabs
 st.markdown("""
     <style>
         /* Sticky tabs */
@@ -269,6 +268,7 @@ st.markdown("""
             z-index: 999;
             background-color: #0e1117;
             padding-top: 8px;
+            border-bottom: 1px solid #444 !important;
         }
     </style>
 """, unsafe_allow_html=True)
