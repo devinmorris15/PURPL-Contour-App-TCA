@@ -135,36 +135,36 @@ st.markdown("""
 
 #Tabs customization (white unselected, purpl when active or hovered over)
 st.markdown("""
-    <style>
-        /* Inactive tabs — white */
-        .stTabs [data-baseweb="tab"] {
-            color: #ffffff !important;
-            font-family: 'Roboto Mono', monospace !important;
-            font-weight: 400 !important;
-            font-size: 1.1rem !important;
-            padding: 10px 16px !important;
-            margin-right: 8px !important;
-        }
-        /* Active/selected tab — purple */
-        .stTabs [aria-selected="true"] {
-            color: #9100FF !important;
-            font-family: 'Roboto Mono', monospace !important;
-            font-weight: 400 !important;
-        }
-        /* Hovered tab — purple */
-        .stTabs [data-baseweb="tab"]:hover {
-            color: #9100FF !important;
-        }
-        /* Tab underline indicator */
-        .stTabs [data-baseweb="tab-highlight"] {
-            background-color: #9100FF !important;
-        }
+	<style>
+		/* Inactive tabs — white */
+		.stTabs [data-baseweb="tab"] {
+			color: #ffffff !important;
+			font-family: 'Roboto Mono', monospace !important;
+			font-weight: 400 !important;
+			font-size: 1.1rem !important;
+			padding: 10px 16px !important;
+			margin-right: 8px !important;
+		}
+		/* Active/selected tab — purple */
+		.stTabs [aria-selected="true"] {
+			color: #9100FF !important;
+			font-family: 'Roboto Mono', monospace !important;
+			font-weight: 400 !important;
+		}
+		/* Hovered tab — purple */
+		.stTabs [data-baseweb="tab"]:hover {
+			color: #9100FF !important;
+		}
+		/* Tab underline indicator */
+		.stTabs [data-baseweb="tab-highlight"] {
+			background-color: #9100FF !important;
+		}
 		/* Target the inner text span directly */
 		.stTabs [data-baseweb="tab"] p {
 			font-size: 1.1rem !important;
 			margin: 0 !important;
 		}
-    </style>
+	</style>
 """, unsafe_allow_html=True)
 
 #Font exclusion for the <</>> button within the sidebar due to bug
@@ -216,9 +216,9 @@ logo_b64 = load_logo(os.path.join(BASE_DIR, "assets/purpl_transparent_logo.png")
 
 #load my personal picture
 def get_image_base64(path):
-    abs_path = os.path.join(os.path.dirname(__file__), path)
-    with open(abs_path, "rb") as f:
-        return base64.b64encode(f.read()).decode()
+	abs_path = os.path.join(os.path.dirname(__file__), path)
+	with open(abs_path, "rb") as f:
+		return base64.b64encode(f.read()).decode()
 
 devin_pic = get_image_base64("assets/devin_purpl_pic.jpeg")
 
@@ -260,70 +260,70 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 st.markdown("""
-    <style>
-        /* Sticky tabs */
-        .stTabs [data-baseweb="tab-list"] {
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            background-color: #0e1117;
-            padding-top: 8px;
-            border-bottom: 1px solid #444 !important;
-        }
-    </style>
+	<style>
+		/* Sticky tabs */
+		.stTabs [data-baseweb="tab-list"] {
+			position: sticky;
+			top: 0;
+			z-index: 999;
+			background-color: #0e1117;
+			padding-top: 8px;
+			border-bottom: 1px solid #444 !important;
+		}
+	</style>
 """, unsafe_allow_html=True)
 
 #Hides dark mode option selection
 st.markdown("""
-    <style>
-        /* Hide the settings/theme toggle button */
-        #MainMenu {visibility: hidden;}
-        header[data-testid="stHeader"] button[kind="header"] {display: none;}
-    </style>
+	<style>
+		/* Hide the settings/theme toggle button */
+		#MainMenu {visibility: hidden;}
+		header[data-testid="stHeader"] button[kind="header"] {display: none;}
+	</style>
 """, unsafe_allow_html=True)
 
 #remove blank space at the top of app
 st.markdown("""
-    <style>
-        .block-container {
-            padding-top: 0rem;
-            margin-top: -7rem;
-        }
-    </style>
+	<style>
+		.block-container {
+			padding-top: 0rem;
+			margin-top: -7rem;
+		}
+	</style>
 """, unsafe_allow_html=True)
 
 #removes press enter to apply pop up
 st.markdown("""
-    <style>
+	<style>
 		/* Hide 'Press Enter to apply' tooltip */
-        [data-testid="InputInstructions"] {
-            display: none !important;
-        }
-    </style>
+		[data-testid="InputInstructions"] {
+			display: none !important;
+		}
+	</style>
 """, unsafe_allow_html=True)
 
 #makes dividers old gold color
 st.markdown("""
-    <style>
-        /* Custom divider color */
-        [data-testid="stDivider"] hr {
-            border-color: #DBC885 !important;
-        }
-    </style>
+	<style>
+		/* Custom divider color */
+		[data-testid="stDivider"] hr {
+			border-color: #DBC885 !important;
+		}
+	</style>
 """, unsafe_allow_html=True)
 
 #remove blank space at top of sidebar
 st.markdown("""
-    <style>
-        [data-testid="stSidebar"] .block-container {
-            padding-top: 0rem;
-            margin-top: -6rem;
-        }
-        section[data-testid="stSidebar"] > div {
-    		padding-top: 0rem;
-    		margin-top: -3rem;  /* go as negative as needed */
+	<style>
+		[data-testid="stSidebar"] .block-container {
+			padding-top: 0rem;
+			margin-top: -6rem;
 		}
-    </style>
+		section[data-testid="stSidebar"] > div {
+			padding-top: 0rem;
+			margin-top: -3rem;  /* go as negative as needed */
+		}
+	</style>
 """, unsafe_allow_html=True)
 
 #create sidebar
@@ -348,7 +348,7 @@ with st.sidebar:
 			ox = st.selectbox("Oxidizer", ["90_H2O2", "98_H2O2","LOX", "N2O"], index=0) #Choose Oxidizer Select Box
 		with col2:
 			fuel = st.selectbox("Fuel", ["CH4", "Ethanol", "Gasoline", "HTBP", "Isopropanol", "Kerosene", "LCH4_NASA", "LH2_NASA", "Methanol", "MMH", "N2H4", "Propane", "RP_1", "RP1_NASA"], index=0) #Choose Fuel Select Box
-    #a
+	#a
 	with col3:
 		of_ratio = st.number_input(label="O/F Ratio", min_value=0.0, max_value=100.0, value=None, step=0.1)#Input Box for O/F Ratio
 
@@ -526,31 +526,31 @@ with st.sidebar:
 tab1, tab2, tab3 = st.tabs(["overview", "nozzle contour results", "more results"])
 
 with tab1:
-    st.title("Welcome to PURPLContour!")
-    st.divider()
-    st.markdown(f"""
-        <p>PURPLContour is a free app designed to be used by PURPL and other student design teams around the world to improve accessibility and participation for rocketry.</p>
+	st.title("Welcome to PURPLContour!")
+	st.divider()
+	st.markdown(f"""
+			<p>PURPLContour is a free app designed to be used by PURPL and other student design teams around the world to improve accessibility and participation for rocketry.</p>
 
-        <div style="display: flex; gap: 24px; align-items: flex-start;">
-            <div style="flex-shrink: 0; text-align: center; border: 1px solid #DBC885; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; align-items: center;">
-                <img src="data:image/jpeg;base64,{devin_pic}" width="180" style="border-radius: 8px; display: block;"/>
-                <div style="margin-top: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; color: #cccccc; line-height: 1.6;">
-                    <strong>Devin Morris</strong><br>
-                    Mechanical Engineering '28<br>
-                    Discord: @yungstarfish.
-                </div>
-            </div>
-            <div>
-                The Thrust Chamber Assembly subteam within PURPL's Turbopump team developed PURPLContour as an alternative to paywalled team standards. The app is designed to allow for diverse rocket engine designs with unique specifications to obtain nozzle contours. Both 2D and 3D graphics of the contour may be obtained, as well as both CSV and DXF outputs for implementation flexibility with numerous CAD and simulation softwares.
-                <br><br>
-                Beyond constructing the nozzle architecture for any combination of propellants, PURPL contour also provides other important values which can be used to support results and future simulations. Both input and output can units can be specified for convenience of any team.
-            </div>
-        </div>
-    """, unsafe_allow_html=True)
+			<div style="display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap;">
+				<div style="flex-shrink: 0; text-align: center; border: 1px solid #DBC885; border-radius: 8px; padding: 12px; display: flex; flex-direction: column; align-items: center;">
+					<img src="data:image/jpeg;base64,{devin_pic}" width="180" style="border-radius: 8px; display: block;"/>
+					<div style="margin-top: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; color: #cccccc; line-height: 1.6;">
+						<strong>Devin Morris</strong><br>
+						Mechanical Engineering '28<br>
+						Discord: @yungstarfish.
+					</div>
+				</div>
+				<div style="flex: 1; min-width: 200px;">
+					The Thrust Chamber Assembly subteam within PURPL's Turbopump team developed PURPLContour as an alternative to paywalled team standards. The app is designed to allow for diverse rocket engine designs with unique specifications to obtain nozzle contours. Both 2D and 3D graphics of the contour may be obtained, as well as both CSV and DXF outputs for implementation flexibility with numerous CAD and simulation softwares.
+					<br><br>
+					Beyond constructing the nozzle architecture for any combination of propellants, PURPL contour also provides other important values which can be used to support results and future simulations. Both input and output can units can be specified for convenience of any team.
+				</div>
+			</div>
+		""", unsafe_allow_html=True)
 
-    st.markdown("<br>", unsafe_allow_html=True)
+	st.markdown("<br>", unsafe_allow_html=True)
 
-    st.markdown("\n\nOur team is dedicated to delivering a continuously improving interface and accurate results. Contact our app's creator, Devin, on discord to provide feedback!")
+	st.markdown("\n\nOur team is dedicated to delivering a continuously improving interface and accurate results. Contact our app's creator, Devin, on discord to provide feedback!")
 
 #	st.text("We are Purdue Undergraduate Rocket Propulsion Laboratory, a forward-thinking team of undergraduate students designing, building, and testing rocket engines.")
 
