@@ -214,6 +214,12 @@ def load_logo(path):
 		return base64.b64encode(f.read()).decode()
 logo_b64 = load_logo(os.path.join(BASE_DIR, "assets/purpl_transparent_logo.png"))
 
+#load my personal picture
+def get_image_base64(path):
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+devin_pic = get_image_base64("assets/devin_purpl_pic.jpeg")
+
 #Adds App Header With PURPL Logo and Title, gotten from Claude
 st.markdown(f"""
 	<style>
@@ -494,13 +500,26 @@ with st.sidebar:
 tab1, tab2, tab3 = st.tabs(["overview", "nozzle contour results", "more results"])
 
 with tab1:
-	st.title("Welcome to PURPLContour!")
-	st.divider()
-	st.text("PURPLContour is a free app designed to be used by PURPL and other student design teams around the world to improve accessibility and participation for rocketry.")
-	st.text("The Thrust Chamber Assembly subteam within PURPL's Turbopump team developed PURPLContour as an alternative to paywalled team standards. The app is intended" \
-	"designed to allow diverse rocket engine designs with unqiue specifications to obtain contour designs. Both 2D and 3D graphics of the contour may be obatined, " \
-	"as well as both CSV and DXF outputs for implementation flexibility with numerous CAD and simulation softwares.")
-	st.text("Our team is dedicated to delivering a continuously improving interface and accurate results. Contact our app's creator, Devin, on discord to provide feedback!")
+    st.title("Welcome to PURPLContour!")
+    st.divider()
+    st.markdown(f"""
+        <div style="overflow: hidden;">
+            <div style="float: left; margin-right: 24px; margin-bottom: 8px; text-align: center;">
+                <img src="data:image/jpeg;base64,{devin_pic}" width="180" style="border-radius: 8px; display: block;"/>
+                <div style="margin-top: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; color: #cccccc; line-height: 1.6;">
+                    <strong>Devin [Last Name]</strong><br>
+                    <strong>Devin Morris</strong><br>
+                    Mechanical Engineering '28<br>
+                    Discord: @yungstarfish.
+                </div>
+            </div>
+            PURPLContour is a free app designed to be used by PURPL and other student design teams around the world to improve accessibility and participation for rocketry.
+            <br><br>
+            The Thrust Chamber Assembly subteam within PURPL's Turbopump team developed PURPLContour as an alternative to paywalled team standards. The app is designed to allow diverse rocket engine designs with unique specifications to obtain contour designs. Both 2D and 3D graphics of the contour may be obtained, as well as both CSV and DXF outputs for implementation flexibility with numerous CAD and simulation softwares.
+            <br><br>
+            Our team is dedicated to delivering a continuously improving interface and accurate results. Contact our app's creator, Devin, on discord to provide feedback!
+        </div>
+    """, unsafe_allow_html=True)
 
 #	st.text("We are Purdue Undergraduate Rocket Propulsion Laboratory, a forward-thinking team of undergraduate students designing, building, and testing rocket engines.")
 
