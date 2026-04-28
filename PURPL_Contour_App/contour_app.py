@@ -141,7 +141,7 @@ st.markdown("""
             color: #ffffff !important;
             font-family: 'Roboto Mono', monospace !important;
             font-weight: 400 !important;
-            font-size: 1.5rem !important;
+            font-size: 1.3rem !important;
             padding: 10px 16px !important;
             margin-right: 8px !important;
         }
@@ -480,8 +480,8 @@ with st.sidebar:
 
 	run_contour = st.button("Generate Contour", type="primary", use_container_width=True, key="run_cont_btn")
 
-#tab1, tab2, tab3, tab4 = st.tabs(["Overview", "Nozzle Contour Results", "Thermal Results", "1-D Thermal Sims"])
-tab1, tab2, tab3 = st.tabs(["Overview", "Nozzle Contour Results", "Thermal Results"])
+#tab1, tab2, tab3, tab4 = st.tabs(["overview", "nozzle contour results", "other results", "1-D Thermal Sims"])
+tab1, tab2, tab3 = st.tabs(["overview", "nozzle contour results", "other results"])
 
 with tab1:
 	st.title("Welcome to PURPL's Nozzle Contouring App!")
