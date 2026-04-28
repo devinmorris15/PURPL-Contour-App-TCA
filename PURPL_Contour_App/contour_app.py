@@ -1832,7 +1832,7 @@ with tab2:
 			t_mf_def2 = "Force of Thrust"
 			t_mf2 = Ft
 			t_mf_unit2 = force_unit
-			t_mf_def1 = "Mass Flow Rate"
+			t_mf_def1 = "Mass Flow Rate \dot{m}"
 			t_mf1 = mdot
 			t_mf_unit1 = mdot_unit
 		
@@ -1927,7 +1927,7 @@ with tab2:
 			df1 = pd.DataFrame({
 				"Input Parameter": [
 					"Fuel", "Oxidizer", "O/F Ratio", "Nozzle Type", "Propellant State", t_mf_def1, "c* Efficiency", "cf efficiency",
-					"Chamber Pressure", "Exit Pressure", "Ambient Pressure", cdef_id1, "Contraction Angle",
+					"Chamber Pressure P\u2092", "Exit Pressure", "Ambient Pressure", cdef_id1, "Contraction Angle",
 					cl_id1, nz, "R1/Rt", "R2/R2max", "Rn/Rt"
 				],
 				"Value": [
