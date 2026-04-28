@@ -264,21 +264,11 @@ st.markdown("""
     <style>
         /* Sticky tabs */
         .stTabs [data-baseweb="tab-list"] {
-            position: -webkit-sticky;
             position: sticky;
             top: 0;
             z-index: 999;
             background-color: #0e1117;
             padding-top: 8px;
-            padding-bottom: 4px;
-        }
-        /* Also freeze the tab container itself */
-        [data-testid="stTabs"] > div:first-child {
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            background-color: #0e1117;
         }
     </style>
 """, unsafe_allow_html=True)
