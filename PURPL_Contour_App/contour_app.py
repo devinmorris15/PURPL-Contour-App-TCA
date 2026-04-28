@@ -159,10 +159,11 @@ st.markdown("""
         .stTabs [data-baseweb="tab-highlight"] {
             background-color: #9100FF !important;
         }
-        /* Target the inner text span directly */
-        .stTabs [data-baseweb="tab"] p {
-            font-size: 2.0rem !important;
-        }
+		/* Target the inner text span directly */
+		.stTabs [data-baseweb="tab"] p {
+			font-size: 1.5rem !important;
+			margin: 0 !important;
+		}
     </style>
 """, unsafe_allow_html=True)
 
