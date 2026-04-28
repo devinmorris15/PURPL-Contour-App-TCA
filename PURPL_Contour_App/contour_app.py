@@ -142,8 +142,8 @@ st.markdown("""
             font-family: 'Roboto Mono', monospace !important;
             font-weight: 400 !important;
             font-size: 2.0rem !important;
-            padding: 10px 32px !important;
-            margin-right: 16px !important;
+            padding: 10px 16px !important;
+            margin-right: 8px !important;
         }
         /* Active/selected tab — purple */
         .stTabs [aria-selected="true"] {
@@ -158,6 +158,10 @@ st.markdown("""
         /* Tab underline indicator */
         .stTabs [data-baseweb="tab-highlight"] {
             background-color: #9100FF !important;
+        }
+        /* Target the inner text span directly */
+        .stTabs [data-baseweb="tab"] p {
+            font-size: 2.0rem !important;
         }
     </style>
 """, unsafe_allow_html=True)
