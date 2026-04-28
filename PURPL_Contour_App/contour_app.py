@@ -135,32 +135,40 @@ st.markdown("""
 #Tabs customization (white unselected, purpl when active or hovered over)
 st.markdown("""
     <style>
-        /* Inactive tabs — white */
+        /* Tab box styling */
         .stTabs [data-baseweb="tab"] {
             color: #ffffff !important;
             font-family: 'Roboto Mono', monospace !important;
             font-weight: 400 !important;
             font-size: 1.1rem !important;
             padding: 10px 24px !important;
-            border-right: 1px solid #444 !important;
+            background-color: #1e1e1e !important;
+            border: 1px solid #444 !important;
+            border-radius: 6px !important;
+            margin-right: 6px !important;
         }
-        /* Active/selected tab — purple */
+        /* Active/selected tab — purple box */
         .stTabs [aria-selected="true"] {
             color: #9100FF !important;
             font-family: 'Roboto Mono', monospace !important;
             font-weight: 400 !important;
+            background-color: #1e1e1e !important;
+            border: 1px solid #9100FF !important;
+            border-radius: 6px !important;
         }
-        /* Hovered tab — purple */
+        /* Hovered tab — purple tint */
         .stTabs [data-baseweb="tab"]:hover {
             color: #9100FF !important;
+            background-color: #2a1a3e !important;
+            border: 1px solid #9100FF !important;
         }
-        /* Tab underline indicator */
+        /* Tab underline indicator — hide it since we're using boxes */
         .stTabs [data-baseweb="tab-highlight"] {
-            background-color: #9100FF !important;
+            background-color: transparent !important;
         }
-        /* Remove separator on last tab */
-        .stTabs [data-baseweb="tab"]:last-child {
-            border-right: none !important;
+        /* Hide the tab border/list border */
+        .stTabs [data-baseweb="tab-border"] {
+            display: none !important;
         }
     </style>
 """, unsafe_allow_html=True)
