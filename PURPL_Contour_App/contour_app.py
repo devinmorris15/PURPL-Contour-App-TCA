@@ -141,7 +141,7 @@ st.markdown("""
             color: #ffffff !important;
             font-family: 'Roboto Mono', monospace !important;
             font-weight: 400 !important;
-            font-size: 1.3rem !important;
+            font-size: 1.1rem !important;
             padding: 10px 16px !important;
             margin-right: 8px !important;
         }
@@ -161,7 +161,7 @@ st.markdown("""
         }
 		/* Target the inner text span directly */
 		.stTabs [data-baseweb="tab"] p {
-			font-size: 1.3rem !important;
+			font-size: 1.1rem !important;
 			margin: 0 !important;
 		}
     </style>
