@@ -270,6 +270,16 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+#removes press enter to apply pop up
+st.markdown("""
+    <style>
+		/* Hide 'Press Enter to apply' tooltip */
+        [data-testid="InputInstructions"] {
+            display: none !important;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 #remove blank space at top of sidebar
 st.markdown("""
     <style>
@@ -494,7 +504,7 @@ with tab1:
 #	st.text("We are Purdue Undergraduate Rocket Propulsion Laboratory, a forward-thinking team of undergraduate students designing, building, and testing rocket engines.")
 
 with tab3:
-	 st.title("Other CEA Results")
+	 st.title("More Results")
 
 with tab2:
 	st.title("Nozzle Contour Results")
