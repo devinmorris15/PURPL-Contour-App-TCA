@@ -271,7 +271,7 @@ st.markdown("""
     <style>
         .block-container {
             padding-top: 0rem;
-            margin-top: -2rem;
+            margin-top: -5rem;
         }
     </style>
 """, unsafe_allow_html=True)
