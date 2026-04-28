@@ -141,7 +141,7 @@ st.markdown("""
             color: #ffffff !important;
             font-family: 'Roboto Mono', monospace !important;
             font-weight: 400 !important;
-            font-size: 2.0rem !important;
+            font-size: 1.5rem !important;
             padding: 10px 16px !important;
             margin-right: 8px !important;
         }
