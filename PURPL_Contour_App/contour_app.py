@@ -481,7 +481,7 @@ with st.sidebar:
 	run_contour = st.button("Generate Contour", type="primary", use_container_width=True, key="run_cont_btn")
 
 #tab1, tab2, tab3, tab4 = st.tabs(["overview", "nozzle contour results", "other results", "1-D Thermal Sims"])
-tab1, tab2, tab3 = st.tabs(["overview", "nozzle contour results", "other results"])
+tab1, tab2, tab3 = st.tabs(["overview", "nozzle contour results", "more results"])
 
 with tab1:
 	st.title("Welcome to PURPL's Nozzle Contouring App!")
