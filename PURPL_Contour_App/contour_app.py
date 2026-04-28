@@ -161,7 +161,7 @@ st.markdown("""
         }
 		/* Target the inner text span directly */
 		.stTabs [data-baseweb="tab"] p {
-			font-size: 1.5rem !important;
+			font-size: 1.3rem !important;
 			margin: 0 !important;
 		}
     </style>
