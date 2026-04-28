@@ -251,6 +251,16 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+#remove blank space at the top of app
+st.markdown("""
+    <style>
+        .block-container {
+            padding-top: 0rem;
+            margin-top: -2rem;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 with st.sidebar:
 
 	st.title("Input Parameters")
