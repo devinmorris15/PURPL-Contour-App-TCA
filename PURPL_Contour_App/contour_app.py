@@ -134,28 +134,35 @@ st.markdown("""
 """, unsafe_allow_html=True)
 #Tabs customization (white unselected, purpl when active or hovered over)
 st.markdown("""
-	<style>
-		/* Inactive tabs — white */
-		.stTabs [data-baseweb="tab"] {
-			color: #ffffff !important;
-			font-family: 'Roboto Mono', monospace !important;
-			font-weight: 400 !important;
-		}
-		/* Active/selected tab — purple */
-		.stTabs [aria-selected="true"] {
-			color: #9100FF !important;
-			font-family: 'Roboto Mono', monospace !important;
-			font-weight: 400 !important;
-		}
-		/* Hovered tab — purple */
-		.stTabs [data-baseweb="tab"]:hover {
-			color: #9100FF !important;
-		}
-		/* Tab underline indicator */
-		.stTabs [data-baseweb="tab-highlight"] {
-			background-color: #9100FF !important;
-		}
-	</style>
+    <style>
+        /* Inactive tabs — white */
+        .stTabs [data-baseweb="tab"] {
+            color: #ffffff !important;
+            font-family: 'Roboto Mono', monospace !important;
+            font-weight: 400 !important;
+            font-size: 1.1rem !important;
+            padding: 10px 24px !important;
+            border-right: 1px solid #444 !important;
+        }
+        /* Active/selected tab — purple */
+        .stTabs [aria-selected="true"] {
+            color: #9100FF !important;
+            font-family: 'Roboto Mono', monospace !important;
+            font-weight: 400 !important;
+        }
+        /* Hovered tab — purple */
+        .stTabs [data-baseweb="tab"]:hover {
+            color: #9100FF !important;
+        }
+        /* Tab underline indicator */
+        .stTabs [data-baseweb="tab-highlight"] {
+            background-color: #9100FF !important;
+        }
+        /* Remove separator on last tab */
+        .stTabs [data-baseweb="tab"]:last-child {
+            border-right: none !important;
+        }
+    </style>
 """, unsafe_allow_html=True)
 
 #Font exclusion for the <</>> button within the sidebar due to bug
