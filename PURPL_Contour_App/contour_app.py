@@ -259,6 +259,20 @@ st.markdown(f"""
 	</div>
 """, unsafe_allow_html=True)
 
+#sticky tabs
+st.markdown("""
+    <style>
+        /* Sticky tabs */
+        .stTabs [data-baseweb="tab-list"] {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background-color: #0e1117;
+            padding-top: 8px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 #Hides dark mode option selection
 st.markdown("""
     <style>
@@ -505,18 +519,17 @@ with tab1:
     st.title("Welcome to PURPLContour!")
     st.divider()
     st.markdown(f"""
-        <div style="overflow: hidden;">
+        <p>PURPLContour is a free app designed to be used by PURPL and other student design teams around the world to improve accessibility and participation for rocketry.</p>
+
+        <div style="overflow: hidden; border: 1px solid #DBC885; border-radius: 8px; padding: 16px;">
             <div style="float: left; margin-right: 24px; margin-bottom: 8px; text-align: center;">
                 <img src="data:image/jpeg;base64,{devin_pic}" width="180" style="border-radius: 8px; display: block;"/>
                 <div style="margin-top: 8px; font-family: 'Roboto Mono', monospace; font-size: 0.85rem; color: #cccccc; line-height: 1.6;">
-                    <strong>Devin [Last Name]</strong><br>
                     <strong>Devin Morris</strong><br>
                     Mechanical Engineering '28<br>
                     Discord: @yungstarfish.
                 </div>
             </div>
-            PURPLContour is a free app designed to be used by PURPL and other student design teams around the world to improve accessibility and participation for rocketry.
-            <br><br>
             The Thrust Chamber Assembly subteam within PURPL's Turbopump team developed PURPLContour as an alternative to paywalled team standards. The app is designed to allow diverse rocket engine designs with unique specifications to obtain contour designs. Both 2D and 3D graphics of the contour may be obtained, as well as both CSV and DXF outputs for implementation flexibility with numerous CAD and simulation softwares.
             <br><br>
             Our team is dedicated to delivering a continuously improving interface and accurate results. Contact our app's creator, Devin, on discord to provide feedback!
