@@ -132,10 +132,16 @@ st.markdown("""
 		}
 	</style>
 """, unsafe_allow_html=True)
+
 #Tabs customization (white unselected, purpl when active or hovered over)
 st.markdown("""
     <style>
-        /* Tab box styling */
+        /* Tab list container — no gap */
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 0px !important;
+        }
+
+        /* Base tab box */
         .stTabs [data-baseweb="tab"] {
             color: #ffffff !important;
             font-family: 'Roboto Mono', monospace !important;
@@ -144,29 +150,46 @@ st.markdown("""
             padding: 10px 24px !important;
             background-color: #1e1e1e !important;
             border: 1px solid #444 !important;
-            border-radius: 6px !important;
-            margin-right: 6px !important;
+            border-radius: 0px !important;
+            margin: 0px !important;
         }
-        /* Active/selected tab — purple box */
+
+        /* Round only the leftmost tab */
+        .stTabs [data-baseweb="tab"]:first-child {
+            border-radius: 6px 0px 0px 6px !important;
+        }
+
+        /* Round only the rightmost tab */
+        .stTabs [data-baseweb="tab"]:last-child {
+            border-radius: 0px 6px 6px 0px !important;
+            border-left: none !important;
+        }
+
+        /* Remove duplicate inner borders */
+        .stTabs [data-baseweb="tab"]:not(:first-child):not(:last-child) {
+            border-left: none !important;
+        }
+
+        /* Active tab — purple border */
         .stTabs [aria-selected="true"] {
             color: #9100FF !important;
             font-family: 'Roboto Mono', monospace !important;
             font-weight: 400 !important;
             background-color: #1e1e1e !important;
             border: 1px solid #9100FF !important;
-            border-radius: 6px !important;
         }
-        /* Hovered tab — purple tint */
+
+        /* Hovered tab */
         .stTabs [data-baseweb="tab"]:hover {
             color: #9100FF !important;
             background-color: #2a1a3e !important;
-            border: 1px solid #9100FF !important;
+            border-color: #9100FF !important;
         }
-        /* Tab underline indicator — hide it since we're using boxes */
+
+        /* Hide underline and bottom border */
         .stTabs [data-baseweb="tab-highlight"] {
             background-color: transparent !important;
         }
-        /* Hide the tab border/list border */
         .stTabs [data-baseweb="tab-border"] {
             display: none !important;
         }
