@@ -1832,7 +1832,7 @@ with tab2:
 			t_mf_def2 = "Force of Thrust"
 			t_mf2 = Ft
 			t_mf_unit2 = force_unit
-			t_mf_def1 = "Mass Flow Rate \dot{m}"
+			t_mf_def1 = "Mass Flow Rate"
 			t_mf1 = mdot
 			t_mf_unit1 = mdot_unit
 		
@@ -1865,8 +1865,8 @@ with tab2:
 			pe = pe_pa / (bar_to_pa)
 			pamb = pamb_pa / (bar_to_pa)
 
-		if chamber_size_def == "Chamber Diameter":
-			cdef_id1 = "Chamber Diameter"
+		if chamber_size_def == "Chamber Diameter (Dc)":
+			cdef_id1 = "Chamber Diameter (Dc)"
 			cdef_val1 = Dc_o
 			cdef_unit1 = out_len_unit
 			cdef_id2 = "Contraction Ratio"
@@ -1875,7 +1875,7 @@ with tab2:
 		else:
 			cdef_val1 = conr
 			cdef_unit1 = "—"
-			cdef_id2 = "Chamber Diameter"
+			cdef_id2 = "Chamber Diameter (Dc)"
 			cdef_val2 = Dc_o
 			cdef_unit2 = out_len_unit
 			cdef_id1 = "Contraction Ratio"
@@ -1927,7 +1927,7 @@ with tab2:
 			df1 = pd.DataFrame({
 				"Input Parameter": [
 					"Fuel", "Oxidizer", "O/F Ratio", "Nozzle Type", "Propellant State", t_mf_def1, "c* Efficiency", "cf efficiency",
-					"Chamber Pressure P\u2092", "Exit Pressure", "Ambient Pressure", cdef_id1, "Contraction Angle",
+					"Chamber Pressure (Pc)", "Exit Pressure (Pe)", "Ambient Pressure (Pamb)", cdef_id1, "Contraction Angle",
 					cl_id1, nz, "R1/Rt", "R2/R2max", "Rn/Rt"
 				],
 				"Value": [
@@ -1953,7 +1953,7 @@ with tab2:
 			st.subheader("All Output Parameters")
 			df2 = pd.DataFrame({
 				"Output Parameter": [
-					"Throat Diameter", "Exit Diameter", cdef_id2, "Expansion Ratio", "Nozzle Length", "Total Length", cl_id2, t_mf_def2,
+					"Throat Diameter (Dt)", "Exit Diameter (De)", cdef_id2, "Expansion Ratio", "Nozzle Length (Ln)", "Total Length (Lt)", cl_id2, t_mf_def2,
 					tn_def, te_def
 				],
 				"Value": [
