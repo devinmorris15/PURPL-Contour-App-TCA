@@ -265,7 +265,7 @@ st.markdown("""
     <style>
         .block-container {
             padding-top: 0rem;
-            margin-top: -5rem;
+            margin-top: -7rem;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -494,12 +494,13 @@ with st.sidebar:
 tab1, tab2, tab3 = st.tabs(["overview", "nozzle contour results", "more results"])
 
 with tab1:
-	st.title("Welcome to PURPL's Nozzle Contouring App!")
-
-	st.text("This free app was designed to be used by PURPL and other student design teams around the world to improve accessibility and participation.")
-	st.text("The Thrust Chamber Assembly subteam within PURPL's Turbopump team developed ____ as an alternative to paywalled team standards. PURPLContour was intended..." \
-	"designed to allow diverse rocket engine designs with unqiue specifications to obtain contour designs. Both 2D and 3D graphics of the contour may be obatined, ..." \
-	"as well as both CSV and DXF outputs for further implementation flexibility.D")
+	st.title("Welcome to PURPLContour!")
+	st.divider()
+	st.text("PURPLContour is a free app designed to be used by PURPL and other student design teams around the world to improve accessibility and participation for rocketry.")
+	st.text("The Thrust Chamber Assembly subteam within PURPL's Turbopump team developed PURPLContour as an alternative to paywalled team standards. The app is intended" \
+	"designed to allow diverse rocket engine designs with unqiue specifications to obtain contour designs. Both 2D and 3D graphics of the contour may be obatined, " \
+	"as well as both CSV and DXF outputs for implementation flexibility with numerous CAD and simulation softwares.")
+	st.text("Our team is dedicated to delivering a continuously improving interface and accurate results. Contact our app's creator, Devin, on discord to provide feedback!")
 
 #	st.text("We are Purdue Undergraduate Rocket Propulsion Laboratory, a forward-thinking team of undergraduate students designing, building, and testing rocket engines.")
 
