@@ -1103,6 +1103,10 @@ def plot_nozzle_final(contour, angles, dia_t, dia_c, dia_e, len_c, Rad2, cangle,
 	for spine in ax.spines.values():
 		spine.set_visible(False)   # ← hides the box around the plot area
 
+	total_width  = xnozz[-1] - xecc[0]   # full axial length of the nozzle
+	total_height = max(ynozz[-1], yecc[-1])  # tallest radius
+	scale = total_height  # 1 unit of "scale" = the exit/chamber half-height
+
 	# throat enterant
 	plt.plot(xe, ye, linewidth=2.5, color='#9100FF')
 	plt.plot(xe, nye, linewidth=2.5, color='#9100FF')
@@ -1918,6 +1922,14 @@ with tab2:
 		col2.metric("Exit Diameter",      f"{De_o:.3f}" +out_len_unit)
 		col3.metric("Estimated Ambient Isp",   f"{isp[0]:.1f}s")
 		col4.metric("Generated Thrust",    f"{Ft:.0f}" + force_unit)
+
+		# Key metrics at top
+		col1, col2, col3, col4, col5 = st.columns(5)
+		col1.metric("Throat Diameter",    f"{Dt_o:.3f}" + out_len_unit)
+		col2.metric("Exit Diameter",      f"{De_o:.3f}" +out_len_unit)
+		col3.metric("Estimated Ambient Isp",   f"{isp[0]:.1f}s")
+		col4.metric("Generated Thrust",    f"{Ft:.0f}" + force_unit)
+		col5.metric ("Scale", f"{(max(Dt_o, De_o))}:0.3f")
 
 		# Full results table below
 		col1, col2 = st.columns(2)
