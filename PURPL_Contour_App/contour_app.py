@@ -1095,15 +1095,15 @@ def plot_nozzle_final(contour, angles, dia_t, dia_c, dia_e, len_c, Rad2, cangle,
 	# ── Scale variable: all sizing derived from the nozzle's largest radius ──
 	scale = max(yecc[-1], ynozz[-1])   # tallest half-height in output units
 
-	lw_contour = 2.5      # always looks the same regardless of units
+	lw_contour = 2.5
 	lw_dim     = 1.0
 	lw_angle   = 1.0
-	lw_radius  = 0.8
-	tick_h     = 8        # points, always visible
-	fs_large   = 14
-	fs_medium  = 12
-	fs_small   = 10
-	fs_axis    = 11
+	lw_radius  = 0.5
+	tick_h     = 6        # was defaulting to 1 (invisible), 6 is visible but not huge
+	fs_large   = 25
+	fs_medium  = 20
+	fs_small   = 15
+	fs_axis    = 15
 	arrowstyle_dim = f'|-|, widthA={tick_h}, widthB={tick_h}'
 	# These are in data units, so they must scale with geometry
 	gap         = scale * 0.008
