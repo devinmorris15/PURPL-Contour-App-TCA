@@ -1917,11 +1917,11 @@ with tab2:
 			te_u = "—"
 		
 		# Key metrics at top
-		col1, col2, col3, col4 = st.columns(4)
-		col1.metric("Throat Diameter",    f"{Dt_o:.3f}" + out_len_unit)
-		col2.metric("Exit Diameter",      f"{De_o:.3f}" +out_len_unit)
-		col3.metric("Estimated Ambient Isp",   f"{isp[0]:.1f}s")
-		col4.metric("Generated Thrust",    f"{Ft:.0f}" + force_unit)
+		#col1, col2, col3, col4 = st.columns(4)
+		#col1.metric("Throat Diameter",    f"{Dt_o:.3f}" + out_len_unit)
+		#col2.metric("Exit Diameter",      f"{De_o:.3f}" +out_len_unit)
+		#col3.metric("Estimated Ambient Isp",   f"{isp[0]:.1f}s")
+		#col4.metric("Generated Thrust",    f"{Ft:.0f}" + force_unit)
 
 		# Key metrics at top
 		col1, col2, col3, col4, col5 = st.columns(5)
