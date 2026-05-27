@@ -1095,32 +1095,23 @@ def plot_nozzle_final(contour, angles, dia_t, dia_c, dia_e, len_c, Rad2, cangle,
 	# ── Scale variable: all sizing derived from the nozzle's largest radius ──
 	scale = max(yecc[-1], ynozz[-1])   # tallest half-height in output units
 
-	# Line widths (points)
-	lw_contour = max(1.0, scale * 0.04)     # main nozzle wall lines
-	lw_dim     = max(0.5, scale * 0.015)    # dimension/annotation arrow shafts
-	lw_angle   = max(0.5, scale * 0.012)    # angle arc lines
-	lw_radius  = max(0.4, scale * 0.010)    # R1/R2/Rn leader lines
-
-	# Tick heights for |-| arrows (points — separate from lw)
-	tick_h = max(3, scale * 0.18)
+	lw_contour = 2.5      # always looks the same regardless of units
+	lw_dim     = 1.0
+	lw_angle   = 1.0
+	lw_radius  = 0.8
+	tick_h     = 8        # points, always visible
+	fs_large   = 14
+	fs_medium  = 12
+	fs_small   = 10
+	fs_axis    = 11
 	arrowstyle_dim = f'|-|, widthA={tick_h}, widthB={tick_h}'
-
-	# Font sizes (points)
-	fs_large  = max(8,  int(scale * 0.55))   # diameter and length labels
-	fs_medium = max(7,  int(scale * 0.42))   # angle labels
-	fs_small  = max(6,  int(scale * 0.30))   # R1, R2, Rn labels
-	fs_axis   = max(7,  int(scale * 0.35))   # axis ticks and axis labels
-
-	# Spatial offsets (data units — scale with the geometry)
-	gap       = scale * 0.008   # small gap between arrow end and geometry
-	text_off  = scale * 0.04    # text offset from arrow midpoint
-	dim_y     = 1.20 * ynozz[-1]   # y-level for all horizontal dimension lines
-	text_y    = 1.25 * ynozz[-1]   # y-level for text above horizontal dim lines
-
-	# Arc radii (data units)
-	arc_r_large = scale * 0.35   # theta_n / conic theta_e arc
-	arc_r_small = scale * 0.25   # theta_e arc (bell)
-	# ─────────────────────────────────────────────────────────────────────────
+	# These are in data units, so they must scale with geometry
+	gap         = scale * 0.008
+	text_off    = scale * 0.04
+	dim_y       = 1.20 * ynozz[-1]
+	text_y      = 1.25 * ynozz[-1]
+	arc_r_large = scale * 0.35
+	arc_r_small = scale * 0.25
 
 	fig2 = plt.figure(figsize=(12,9), facecolor='none')
 	ax = fig2.add_subplot(111)
