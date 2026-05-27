@@ -1091,163 +1091,209 @@ def plot_nozzle_final(contour, angles, dia_t, dia_c, dia_e, len_c, Rad2, cangle,
 	xeca  = np.array(contour[9])  * conv_o;  yeca  = np.array(contour[10]) * conv_o;  nyeca = np.array(contour[11]) * conv_o
 	xecc  = np.array(contour[12]) * conv_o;  yecc  = np.array(contour[13]) * conv_o;  nyecc = np.array(contour[14]) * conv_o
 	xnozz = np.array(contour[15]) * conv_o;  ynozz = np.array(contour[16]) * conv_o;  nynozz= np.array(contour[17]) * conv_o
-	# plot
+
+	# ── Scale variable: all sizing derived from the nozzle's largest radius ──
+	scale = max(yecc[-1], ynozz[-1])   # tallest half-height in output units
+
+	# Line widths (points)
+	lw_contour = max(1.0, scale * 0.04)     # main nozzle wall lines
+	lw_dim     = max(0.5, scale * 0.015)    # dimension/annotation arrow shafts
+	lw_angle   = max(0.5, scale * 0.012)    # angle arc lines
+	lw_radius  = max(0.4, scale * 0.010)    # R1/R2/Rn leader lines
+
+	# Tick heights for |-| arrows (points — separate from lw)
+	tick_h = max(3, scale * 0.18)
+	arrowstyle_dim = f'|-|, widthA={tick_h}, widthB={tick_h}'
+
+	# Font sizes (points)
+	fs_large  = max(8,  int(scale * 0.55))   # diameter and length labels
+	fs_medium = max(7,  int(scale * 0.42))   # angle labels
+	fs_small  = max(6,  int(scale * 0.30))   # R1, R2, Rn labels
+	fs_axis   = max(7,  int(scale * 0.35))   # axis ticks and axis labels
+
+	# Spatial offsets (data units — scale with the geometry)
+	gap       = scale * 0.008   # small gap between arrow end and geometry
+	text_off  = scale * 0.04    # text offset from arrow midpoint
+	dim_y     = 1.20 * ynozz[-1]   # y-level for all horizontal dimension lines
+	text_y    = 1.25 * ynozz[-1]   # y-level for text above horizontal dim lines
+
+	# Arc radii (data units)
+	arc_r_large = scale * 0.35   # theta_n / conic theta_e arc
+	arc_r_small = scale * 0.25   # theta_e arc (bell)
+	# ─────────────────────────────────────────────────────────────────────────
 
 	fig2 = plt.figure(figsize=(12,9), facecolor='none')
 	ax = fig2.add_subplot(111)
 	ax.set_facecolor('none')
-	ax.patch.set_alpha(0)          # ← makes axes patch fully transparent
-	fig2.patch.set_alpha(0)        # ← makes figure patch fully transparent
+	ax.patch.set_alpha(0)
+	fig2.patch.set_alpha(0)
 
-	# Remove the axes border box
 	for spine in ax.spines.values():
-		spine.set_visible(False)   # ← hides the box around the plot area
-
-	total_width  = xnozz[-1] - xecc[0]   # full axial length of the nozzle
-	total_height = max(ynozz[-1], yecc[-1])  # tallest radius
-	scale = total_height  # 1 unit of "scale" = the exit/chamber half-height
+		spine.set_visible(False)
 
 	# throat enterant
-	plt.plot(xe, ye, linewidth=2.5, color='#9100FF')
-	plt.plot(xe, nye, linewidth=2.5, color='#9100FF')
-	
-	#convergent diagonal
-	plt.plot(xed, yed, linewidth=2.5, color='#9100FF')
-	plt.plot(xed, nyed, linewidth=2.5, color='#9100FF')
+	plt.plot(xe, ye,   linewidth=lw_contour, color='#9100FF')
+	plt.plot(xe, nye,  linewidth=lw_contour, color='#9100FF')
 
-	#convergent arc
-	plt.plot(xeca, yeca, linewidth=2.5, color='#9100FF')
-	plt.plot(xeca, nyeca, linewidth=2.5, color='#9100FF')	
+	# convergent diagonal
+	plt.plot(xed, yed,   linewidth=lw_contour, color='#9100FF')
+	plt.plot(xed, nyed,  linewidth=lw_contour, color='#9100FF')
 
-	#combustion chamber cylinder
-	plt.plot(xecc, yecc, linewidth=2.5, color='#9100FF')
-	plt.plot(xecc, nyecc, linewidth=2.5, color='#9100FF')	
+	# convergent arc
+	plt.plot(xeca, yeca,   linewidth=lw_contour, color='#9100FF')
+	plt.plot(xeca, nyeca,  linewidth=lw_contour, color='#9100FF')
+
+	# combustion chamber cylinder
+	plt.plot(xecc, yecc,   linewidth=lw_contour, color='#9100FF')
+	plt.plot(xecc, nyecc,  linewidth=lw_contour, color='#9100FF')
 
 	# throat exit
-	plt.plot(xe2, ye2, linewidth=2.5, color='#9100FF')
-	plt.plot(xe2, nye2, linewidth=2.5, color='#9100FF')
+	plt.plot(xe2, ye2,   linewidth=lw_contour, color='#9100FF')
+	plt.plot(xe2, nye2,  linewidth=lw_contour, color='#9100FF')
 
-	# bell section
-	plt.plot(xnozz, ynozz, linewidth=2.5, color='#9100FF')
-	plt.plot(xnozz, nynozz, linewidth=2.5, color='#9100FF')
+	# bell / conic section
+	plt.plot(xnozz, ynozz,   linewidth=lw_contour, color='#9100FF')
+	plt.plot(xnozz, nynozz,  linewidth=lw_contour, color='#9100FF')
 
-	# throat diameter line
-	text = str(round(dia_t,2)) + unit_s
-	# draw dimension from [0,0] to [xe[-1], ye[-1]]
-	plt.annotate( "", [xe[-1], 0.95 * nye[-1]], [xe[-1], 0.95 * ye[-1]], arrowprops=dict(lw=1, arrowstyle='|-|', color='#ffffff'))
-	plt.text(0.1,0.1, text, fontsize=25, color='#ffffff' )	
+	# ── throat diameter line ─────────────────────────────────────────────────
+	text = str(round(dia_t, 2)) + unit_s
+	plt.annotate("", [xe[-1], 0.95 * nye[-1]], [xe[-1], 0.95 * ye[-1]],
+				 arrowprops=dict(lw=lw_dim, arrowstyle=arrowstyle_dim, color='#ffffff'))
+	plt.text(xe[-1] + text_off, 0, text,
+			 fontsize=fs_large, color='#ffffff', ha='left', va='center')
 
-	# chamber diameter line
-	text = str(round(dia_c,2)) + unit_s
-	# draw dimension from [0,0] to [xe[-1], ye[-1]]
-	plt.annotate( "", [xecc[-1], 0.95 * nyecc[-1]], [xecc[-1], 0.95 * yecc[-1]], arrowprops=dict(lw=1, arrowstyle='|-|', color='#ffffff') )
-	plt.text(xecc[-1] + 0.1,0.1, text, fontsize=25, color='#ffffff' )	
+	# ── chamber diameter line ────────────────────────────────────────────────
+	text = str(round(dia_c, 2)) + unit_s
+	plt.annotate("", [xecc[-1], 0.95 * nyecc[-1]], [xecc[-1], 0.95 * yecc[-1]],
+				 arrowprops=dict(lw=lw_dim, arrowstyle=arrowstyle_dim, color='#ffffff'))
+	plt.text(xecc[-1] + text_off, 0, text,
+			 fontsize=fs_large, color='#ffffff', ha='left', va='center')
 
-	# exit diameter line
-	text = str(round(dia_e,2)) + unit_s
-	# draw dimension from [0,0] to [xe[-1], ye[-1]]
-	plt.annotate( "", [xnozz[-1], 0.95 * nynozz[-1]], [xnozz[-1], 0.95 * ynozz[-1]], arrowprops=dict(lw=1, arrowstyle='|-|', color='#ffffff') )
-	plt.text(4.0,0.1, text, fontsize=25, color='#ffffff' )	
+	# ── exit diameter line ───────────────────────────────────────────────────
+	text = str(round(dia_e, 2)) + unit_s
+	plt.annotate("", [xnozz[-1], 0.95 * nynozz[-1]], [xnozz[-1], 0.95 * ynozz[-1]],
+				 arrowprops=dict(lw=lw_dim, arrowstyle=arrowstyle_dim, color='#ffffff'))
+	plt.text(xnozz[-1] + text_off, 0, text,
+			 fontsize=fs_large, color='#ffffff', ha='left', va='center')
 
 	con_len = len_c - abs(xecc[0])
 
-	# chamber length line
-	text = str(round(con_len,2)) + unit_s
-	# draw dimension from [0,0] to [xe[-1], ye[-1]]
-	plt.annotate( "", [(xecc[-1] - 0.05), 1.2 * ynozz[-1]], [(xecc[0] + 0.05), 1.2 * ynozz[-1]], arrowprops=dict(lw=1, arrowstyle='|-|', color='#ffffff'))
-	plt.text(-8.9, 1.25* ynozz[-1], text, fontsize=25, color='#ffffff')
+	# ── chamber length line ──────────────────────────────────────────────────
+	text = str(round(con_len, 2)) + unit_s
+	x_mid = (xecc[0] + xecc[-1]) / 2
+	plt.annotate("", [(xecc[-1] - gap), dim_y], [(xecc[0] + gap), dim_y],
+				 arrowprops=dict(lw=lw_dim, arrowstyle=arrowstyle_dim, color='#ffffff'))
+	plt.text(x_mid, text_y, text,
+			 fontsize=fs_large, color='#ffffff', ha='center', va='bottom')
 
-	# convergent length line
-	text = str(round(abs(xecc[0]),2)) + unit_s
-	# draw dimension from [0,0] to [xe[-1], ye[-1]]
-	plt.annotate( "", [(xecc[0] - 0.05), 1.2 * ynozz[-1]], [0.05, 1.2 * ynozz[-1]], arrowprops=dict(lw=1, arrowstyle='|-|', color='#ffffff'))
-	plt.text(-2.0, 1.25* ynozz[-1], text, fontsize=25, color='#ffffff')
+	# ── convergent length line ───────────────────────────────────────────────
+	text = str(round(abs(xecc[0]), 2)) + unit_s
+	x_mid = (xecc[0] + 0) / 2
+	plt.annotate("", [(xecc[0] - gap), dim_y], [gap, dim_y],
+				 arrowprops=dict(lw=lw_dim, arrowstyle=arrowstyle_dim, color='#ffffff'))
+	plt.text(x_mid, text_y, text,
+			 fontsize=fs_large, color='#ffffff', ha='center', va='bottom')
 
-	# divergent section length line
-	text = str(round(xnozz[-1],2)) + unit_s
-	# draw dimension from [0,0] to [xe[-1], ye[-1]]
-	plt.annotate( "", [-0.05, 1.2 * ynozz[-1]], [(xnozz[-1] + 0.05), 1.2 * ynozz[-1]], arrowprops=dict(lw=1, arrowstyle='|-|', color='#ffffff'))
-	plt.text(2.0, 1.25* ynozz[-1], text, fontsize=25, color='#ffffff')
+	# ── divergent length line ────────────────────────────────────────────────
+	text = str(round(xnozz[-1], 2)) + unit_s
+	x_mid = xnozz[-1] / 2
+	plt.annotate("", [-gap, dim_y], [(xnozz[-1] + gap), dim_y],
+				 arrowprops=dict(lw=lw_dim, arrowstyle=arrowstyle_dim, color='#ffffff'))
+	plt.text(x_mid, text_y, text,
+			 fontsize=fs_large, color='#ffffff', ha='center', va='bottom')
 
+	# ── angle arcs ───────────────────────────────────────────────────────────
 	if conic == 1:
-		angle_list 		= np.linspace(0, eangle, 100)
-		earcx = []; earcy = [];
-		for i in angle_list:
-			earcx.append( xe2[-1] + 2.0 * math.cos(i))
-			earcy.append( ye2[-1] + 2.0 * math.sin(i))
+		angle_list = np.linspace(0, eangle, 100)
+		earcx = [xe2[-1] + arc_r_large * math.cos(i) for i in angle_list]
+		earcy = [ye2[-1] + arc_r_large * math.sin(i) for i in angle_list]
 
-		# theta exit angle
-		text = r'$\theta_e$ = ' + str(round((eangle * 180 / np.pi),1)) + r'$^\circ$'
-		# draw dimension from [0,0] to [xe[-1], ye[-1]]
-		plt.annotate( "", [xe2[-1], ye2[-1]], [(xe2[-1] + 2.5), ye2[-1]], arrowprops=dict(lw=1, arrowstyle='-', color='#DBC885'))
-		plt.annotate( "", [xe2[-1], ye2[-1]], [(xe2[-1] + (2.5 * math.cos(eangle))), (ye2[-1] + (2.5 * math.sin(eangle)))], arrowprops=dict(lw=1, arrowstyle='-', color='#DBC885'))
-		plt.plot(earcx, earcy, linewidth=1, color='#DBC885')
-		plt.text(2.5, 1.75, text, fontsize=20, color='#ffffff')
+		text = r'$\theta_e$ = ' + str(round((eangle * 180 / np.pi), 1)) + r'$^\circ$'
+		plt.annotate("", [xe2[-1], ye2[-1]], [(xe2[-1] + arc_r_large * 1.25), ye2[-1]],
+					 arrowprops=dict(lw=lw_angle, arrowstyle='-', color='#DBC885'))
+		plt.annotate("", [xe2[-1], ye2[-1]],
+					 [(xe2[-1] + (arc_r_large * 1.25 * math.cos(eangle))),
+					  (ye2[-1] + (arc_r_large * 1.25 * math.sin(eangle)))],
+					 arrowprops=dict(lw=lw_angle, arrowstyle='-', color='#DBC885'))
+		plt.plot(earcx, earcy, linewidth=lw_angle, color='#DBC885')
+		plt.text(xe2[-1] + arc_r_large * 1.35, ye2[-1] + arc_r_large * 0.5,
+				 text, fontsize=fs_medium, color='#ffffff', ha='left', va='center')
 	else:
-		# Theta n arc functions
-		angle_list 		= np.linspace(0, theta_n, 100)
-		tnarcx = []; tnarcy = [];
-		for i in angle_list:
-			tnarcx.append( xe2[-1] + 2.0 * math.cos(i))
-			tnarcy.append( ye2[-1] + 2.0 * math.sin(i))
+		# theta_n arc
+		angle_list = np.linspace(0, theta_n, 100)
+		tnarcx = [xe2[-1] + arc_r_large * math.cos(i) for i in angle_list]
+		tnarcy = [ye2[-1] + arc_r_large * math.sin(i) for i in angle_list]
 
-		# theta n angle
-		text = r'$\theta_n$ = ' + str(round((theta_n * 180 / np.pi),1)) + r'$^\circ$'
-		# draw dimension from [0,0] to [xe[-1], ye[-1]]
-		plt.annotate( "", [xe2[-1], ye2[-1]], [(xe2[-1] + 2.5), ye2[-1]], arrowprops=dict(lw=1, arrowstyle='-', color='#DBC885'))
-		plt.annotate( "", [xe2[-1], ye2[-1]], [(xe2[-1] + (2.5 * math.cos(theta_n))), (ye2[-1] + (2.5 * math.sin(theta_n)))], arrowprops=dict(lw=1, arrowstyle='-', color='#DBC885'))
-		plt.plot(tnarcx, tnarcy, linewidth=1, color='#DBC885')
-		plt.text(2.5, 1.75, text, fontsize=20, color='#ffffff')
+		text = r'$\theta_n$ = ' + str(round((theta_n * 180 / np.pi), 1)) + r'$^\circ$'
+		plt.annotate("", [xe2[-1], ye2[-1]], [(xe2[-1] + arc_r_large * 1.25), ye2[-1]],
+					 arrowprops=dict(lw=lw_angle, arrowstyle='-', color='#DBC885'))
+		plt.annotate("", [xe2[-1], ye2[-1]],
+					 [(xe2[-1] + (arc_r_large * 1.25 * math.cos(theta_n))),
+					  (ye2[-1] + (arc_r_large * 1.25 * math.sin(theta_n)))],
+					 arrowprops=dict(lw=lw_angle, arrowstyle='-', color='#DBC885'))
+		plt.plot(tnarcx, tnarcy, linewidth=lw_angle, color='#DBC885')
+		plt.text(xe2[-1] + arc_r_large * 1.35, ye2[-1] + arc_r_large * 0.4,
+				 text, fontsize=fs_medium, color='#ffffff', ha='left', va='center')
 
-		# Theta e arc functions
-		angle_list 		= np.linspace(0, theta_e, 100)
-		tearcx = []; tearcy = [];
-		for i in angle_list:
-			tearcx.append( xnozz[-1] + 1.5 * math.cos(i))
-			tearcy.append( ynozz[-1] + 1.5 * math.sin(i))
+		# theta_e arc
+		angle_list = np.linspace(0, theta_e, 100)
+		tearcx = [xnozz[-1] + arc_r_small * math.cos(i) for i in angle_list]
+		tearcy = [ynozz[-1] + arc_r_small * math.sin(i) for i in angle_list]
 
-		# theta e angle
-		text = r'$\theta_e$ = ' + str(round((theta_e * 180 / np.pi),1)) + r'$^\circ$'
-		# draw dimension from [0,0] to [xe[-1], ye[-1]]
-		plt.annotate( "", [xnozz[-1], ynozz[-1]], [(xnozz[-1] + 2.0), ynozz[-1]], arrowprops=dict(lw=1, arrowstyle='-', color='#DBC885'))
-		plt.annotate( "", [xnozz[-1], ynozz[-1]], [(xnozz[-1] + (2.0 * math.cos(theta_e))), (ynozz[-1] + (2.0 * math.sin(theta_e)))], arrowprops=dict(lw=1, arrowstyle='-', color='#DBC885'))
-		plt.plot(tearcx, tearcy, linewidth=1, color='#DBC885')
-		plt.text(6, 5, text, fontsize=20, color='#ffffff')
+		text = r'$\theta_e$ = ' + str(round((theta_e * 180 / np.pi), 1)) + r'$^\circ$'
+		plt.annotate("", [xnozz[-1], ynozz[-1]], [(xnozz[-1] + arc_r_small * 1.25), ynozz[-1]],
+					 arrowprops=dict(lw=lw_angle, arrowstyle='-', color='#DBC885'))
+		plt.annotate("", [xnozz[-1], ynozz[-1]],
+					 [(xnozz[-1] + (arc_r_small * 1.25 * math.cos(theta_e))),
+					  (ynozz[-1] + (arc_r_small * 1.25 * math.sin(theta_e)))],
+					 arrowprops=dict(lw=lw_angle, arrowstyle='-', color='#DBC885'))
+		plt.plot(tearcx, tearcy, linewidth=lw_angle, color='#DBC885')
+		plt.text(xnozz[-1] + arc_r_small * 1.35, ynozz[-1] + arc_r_small * 0.4,
+				 text, fontsize=fs_medium, color='#ffffff', ha='left', va='center')
 
-	#r1 distance line
+	# ── R1 / R2 / Rn leader lines ─────────────────────────────────────────────
 	rt = dia_t / 2.0
+
+	# R1
 	r1_hangle = ((270 + 180 + cangle) / 2) * np.pi / 180
-	plt.annotate( "", [0, (2.5 * rt)], [(1.5 * rt * math.cos(r1_hangle)), (rt * ((1.5 * math.sin(r1_hangle)) + 2.5))], arrowprops=dict(lw=.5, arrowstyle='<-', color='#DBC885'))
-	plt.plot(0, (2.5 * rt), '+' , color='#DBC885')
-	plt.text(-1.0, 2.75, r'$R_1$', fontsize=15, color='#ffffff')
+	plt.annotate("", [0, (2.5 * rt)],
+				 [(1.5 * rt * math.cos(r1_hangle)), (rt * ((1.5 * math.sin(r1_hangle)) + 2.5))],
+				 arrowprops=dict(lw=lw_radius, arrowstyle='<-', color='#DBC885'))
+	plt.plot(0, (2.5 * rt), '+', color='#DBC885')
+	plt.text(-(scale * 0.12), (2.5 * rt) + (scale * 0.05),
+			 r'$R_1$', fontsize=fs_small, color='#ffffff', ha='center', va='bottom')
 
-	#r2 distance line
+	# R2
 	r2_hangle = ((90 + cangle) / 2) * np.pi / 180
-	plt.annotate( "", [xecc[0], (yecc[0] - R2)], [(xecc[0] + R2 * math.cos(r2_hangle)), (yecc[0] + R2 * (math.sin(r2_hangle) - 1))], arrowprops=dict(lw=.5, arrowstyle='<-', color='#DBC885'))
-	plt.plot(xecc[0], (yecc[0] - R2), '+' , color='#DBC885')
-	plt.text(-3.1, 2.1, r'$R_2$', fontsize=15, color='#ffffff')	
+	plt.annotate("", [xecc[0], (yecc[0] - R2)],
+				 [(xecc[0] + R2 * math.cos(r2_hangle)), (yecc[0] + R2 * (math.sin(r2_hangle) - 1))],
+				 arrowprops=dict(lw=lw_radius, arrowstyle='<-', color='#DBC885'))
+	plt.plot(xecc[0], (yecc[0] - R2), '+', color='#DBC885')
+	plt.text(xecc[0] - (scale * 0.12), (yecc[0] - R2) + (scale * 0.05),
+			 r'$R_2$', fontsize=fs_small, color='#ffffff', ha='center', va='bottom')
 
-	#rn distance line
+	# Rn
 	rn_hangle = ((270 + 270 + cangle) / 2) * np.pi / 180
-	plt.annotate( "", [0, (1.382 * rt)], [(0.382 * rt * math.cos(rn_hangle)), (rt * ((0.382 * math.sin(rn_hangle)) + 1.382))], arrowprops=dict(lw=.5, arrowstyle='<-', color='#DBC885'))
+	plt.annotate("", [0, (1.382 * rt)],
+				 [(0.382 * rt * math.cos(rn_hangle)), (rt * ((0.382 * math.sin(rn_hangle)) + 1.382))],
+				 arrowprops=dict(lw=lw_radius, arrowstyle='<-', color='#DBC885'))
 	plt.plot(0, (1.382 * rt), '+', color='#DBC885')
-	plt.text(0.1, 2.0, r'$R_n$', fontsize=15, color='#ffffff')
+	plt.text(scale * 0.06, (1.382 * rt) + (scale * 0.05),
+			 r'$R_n$', fontsize=fs_small, color='#ffffff', ha='center', va='bottom')
 
-	# axis
+	# ── axes, grid, labels ───────────────────────────────────────────────────
 	plt.axhline(color='#ffffff', lw=0.5, linestyle="dashed")
-	plt.axvline(color='#ffffff', lw=0.5, linestyle="dashed")		
-	
-	# grids
+	plt.axvline(color='#ffffff', lw=0.5, linestyle="dashed")
+
 	plt.grid(color='#ffffff')
 	plt.minorticks_on()
-	plt.grid(which='major', linestyle='-', linewidth='0.5', color='#ffffff') # , color='red'
-	plt.grid(which='minor', linestyle=':', linewidth='0.5', color='#ffffff') # , color='black'	
-	plt.xticks(fontsize=15, color='#ffffff')
-	plt.yticks(fontsize=15, color='#ffffff')
-	
-	# show
-	plt.xlabel(unit, fontsize=18, color='#ffffff')
-	plt.ylabel(unit, fontsize=18, color='#ffffff')
+	plt.grid(which='major', linestyle='-', linewidth='0.5', color='#ffffff')
+	plt.grid(which='minor', linestyle=':', linewidth='0.5', color='#ffffff')
+	plt.xticks(fontsize=fs_axis, color='#ffffff')
+	plt.yticks(fontsize=fs_axis, color='#ffffff')
+
+	plt.xlabel(unit, fontsize=fs_axis, color='#ffffff')
+	plt.ylabel(unit, fontsize=fs_axis, color='#ffffff')
 	plt.axis('equal')
 	fig2.tight_layout(rect=[0, 0.03, 1, 0.95])
 	
